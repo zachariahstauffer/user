@@ -1,5 +1,0 @@
-{
-    "python.analysis.typeCheckingMode": "basic",
-    "editor.inlineSuggest.enabled": false,
-    "editor.inlineSuggest.edits.renderSideBySide": "never"
-}
