@@ -85,7 +85,7 @@ class display:
                 print('user found, checking password')
                 has = user.get_has()
 
-                if verify(password, has):
+                if verify(password, has).vf():
                     print(f"{username} has logged in")
                 break
 
@@ -107,7 +107,7 @@ class run:
 
         elif choice == 'wipe':
             with open('data.dat', 'wb') as file:
-                pickle.dump({}, file)
+                pickle.dump([], file)
             
         else:
             print('error')
