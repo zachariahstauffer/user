@@ -97,12 +97,12 @@ class run:
         pass
 
     def run(self):
-        choice = str(input("type su for sign up or lg for login: "))
+        choice = str(input("sign-up or login: "))
 
-        if choice == 'su':
+        if choice == 'sign-up':
             display().sign_up()
 
-        elif choice == 'lg':
+        elif choice == 'login':
             display().login()
 
         elif choice == 'wipe':
