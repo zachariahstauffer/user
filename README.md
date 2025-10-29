@@ -1,10 +1,12 @@
 # user
 
+REQUIREMENTS: you will need python3 for this, and if you don't have it you will need to install bcrypt, ```pip install bcrypt```
+
 this is a challenge project given to me by a friend
 
 how to use
 
-run the program using 'python3 Main.py' in a termainl
+run the program using ```python3 Main.py``` in a termainl
 
 you will be prompted to sign up or log in, to sign up you type sign-up. to login you type login.
 
