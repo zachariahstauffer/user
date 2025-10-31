@@ -2,7 +2,7 @@ import Data
 import User
 import Verify
     
-class display:
+class Display:
     def __init__(self):
         self.users = []
         self.data = Data.Data()
@@ -48,7 +48,7 @@ class display:
     def check_data(self):
         self.users = self.data.read()
 
-class run:
+class Run:
     def __init__(self):
         pass
 
@@ -56,10 +56,10 @@ class run:
         choice = str(input("sign-up or login: "))
 
         if choice == 'sign-up' or choice == 's':
-            display().sign_up()
+            Display().sign_up()
 
         elif choice == 'login' or choice == 'l':
-            display().login()
+            Display().login()
 
         elif choice == 'wipe' or choice == 'w':
             Data.Data().wipe()
@@ -67,4 +67,5 @@ class run:
         else:
             print('error')
 
-run().run()
+if __name__ == '__main__':
+    Run().run()
