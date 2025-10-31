@@ -1,4 +1,4 @@
-import Txt_to_hash
+import Txt_to_hash as tth
 
 class User:
     def __init__(self, username: str, password):
@@ -10,7 +10,7 @@ class User:
         return self.username
     
     def hass(self, password):
-        self.has = Txt_to_hash.Txt_to_hash(password).hashh()
+        self.has = tth.Txt_to_hash(password).hashh()
 
     def get_has(self):
         return self.has
