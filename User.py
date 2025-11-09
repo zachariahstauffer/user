@@ -3,14 +3,14 @@ import Txt_to_hash as tth
 class User:
     def __init__(self, username: str, password):
         self.username = username
-        self.has = b''
-        self.hass(password)
+        self.hash_val = b''
+        self.hashed(password)
     
     def get_username(self):
         return self.username
     
-    def hass(self, password):
-        self.has = tth.Txt_to_hash(password).hashh()
+    def hashed(self, password):
+        self.hash_val = tth.Txt_to_hash(password).hashh()
 
-    def get_has(self):
-        return self.has
+    def get_hash(self):
+        return self.hash_val
