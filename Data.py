@@ -12,13 +12,15 @@ class Data:
             cur.execute("""
                 CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT UNIQUE,
-                password_hash TEXT)
+                username TEXT,
+                password_hash BLOB)
                 """)
 
     def save(self, user):
         # with open('data.dat', 'wb') as file:
         #     pickle.dump(users, file)
+        
+
         username = user.get_username()
         hashed = user.get_hash()
 
@@ -30,11 +32,7 @@ class Data:
                 VALUES (?, ?)
                 """, (username, hashed))
 
-
-            
-        pass
-
-    def read(self, user):
+    def load(self, user):
         '''try:
 
             file = open('data.dat', 'rb')
@@ -45,15 +43,19 @@ class Data:
 
         return self.users'''
 
-        
 
         with sqlite3.connect('data.db') as con:
             cur = con.cursor()
 
+            cur.execute("SELECT password_hash FROM users WHERE username = ?", (user,))
+            row = cur.fetchone()
 
+        if row is None:
+            return None
+        
+        val = row[0]
+        return val
 
-        pass
-    
     def wipe(self):
         # with open('data.dat', 'wb') as file:
         #         pickle.dump([], file)

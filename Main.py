@@ -5,7 +5,6 @@ import Verify
     
 class Display:
     def __init__(self):
-        self.users = []
         self.data = Data.Data()
 
     def run(self):
@@ -29,18 +28,23 @@ class Display:
 
         new_user = User.User(username, password)
         
-        self.data.save(self.users)
+        self.data.save(new_user)
 
     def login(self):
         username = str(input("Username: "))
         password = str(input("Password: ")).encode('utf-8')
-        
-        print('looking for user')
+        hashed_password = self.check_data(username)
 
+        if Verify.Verify(password).verify_login(hashed_password):
+            print('logged in')
+            return
         
+        print('wrong password')
+        
+
     
-        def check_data(self, user):
-            pass
+    def check_data(self, user):
+        return self.data.load(user)
    
 if __name__ == '__main__':
     Display().run()
