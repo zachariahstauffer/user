@@ -15,6 +15,7 @@ class Data:
                 username TEXT,
                 password_hash BLOB)
                 """)
+            con.commit()
 
     def save(self, user):
         # with open('data.dat', 'wb') as file:
@@ -31,7 +32,8 @@ class Data:
                 INSERT INTO users (username, password_hash)
                 VALUES (?, ?)
                 """, (username, hashed))
-
+            file.commit()
+            
     def load(self, user):
         '''try:
 
@@ -60,4 +62,8 @@ class Data:
         # with open('data.dat', 'wb') as file:
         #         pickle.dump([], file)
 
-        pass
+        with sqlite3.connect('data.db') as con:
+            cur = con.cursor()
+            # Delete all rows from users table
+            cur.execute("DELETE FROM users")
+            con.commit()

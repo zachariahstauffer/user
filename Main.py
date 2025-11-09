@@ -27,22 +27,32 @@ class Display:
         password = str(input("Make Password: "))
 
         new_user = User.User(username, password)
+
+        if not Verify.Verify(password).verify_sign_up():
+            return
         
         self.data.save(new_user)
 
     def login(self):
         username = str(input("Username: "))
         password = str(input("Password: ")).encode('utf-8')
-        hashed_password = self.check_data(username)
 
-        if Verify.Verify(password).verify_login(hashed_password):
-            print('logged in')
+        exists, correct = Verify.Verify(password).verify_login(username)
+
+        if not exists:
+            print(f'{username} does not have an account')
             return
         
-        print('wrong password')
+        print(f'{username} was found')
         
+        if correct:
+            print(f'{username} has logged in')
+            return
+        else:
+            print('wrong password')
 
-    
+            
+
     def check_data(self, user):
         return self.data.load(user)
    

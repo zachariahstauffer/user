@@ -1,4 +1,5 @@
 import bcrypt
+import Data
 
 class Verify:
     def __init__(self, password):
@@ -55,6 +56,14 @@ class Verify:
 
         return has_upper, has_lower, has_special, has_number
 
-    def verify_login(self, has):
+    def verify_login(self,username):
 
-        return bool(bcrypt.checkpw(self.password, has))
+        hashed = Data.Data().load(username)
+
+        if hashed is None:
+            return False, False
+        
+        if bcrypt.checkpw(self.password, hashed):
+            return True, True
+        else:
+            return True, False
