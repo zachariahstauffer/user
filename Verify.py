@@ -57,13 +57,13 @@ class Verify:
         return has_upper, has_lower, has_special, has_number
 
     def verify_login(self,username):
-
+        password = self.password.encode('utf-8')
         hashed = Data.Data().load(username)
-
+        
         if hashed is None:
             return False, False
         
-        if bcrypt.checkpw(self.password, hashed):
+        if bcrypt.checkpw(password, hashed):
             return True, True
         else:
             return True, False

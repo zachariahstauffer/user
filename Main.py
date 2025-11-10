@@ -30,7 +30,7 @@ class Display:
 
         if not Verify.Verify(password).verify_sign_up():
             return
-        
+        print('signed up')
         self.data.save(new_user)
 
     def login(self):
