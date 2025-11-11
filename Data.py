@@ -1,4 +1,3 @@
-import pickle
 import sqlite3
 
 class Data:
@@ -18,10 +17,6 @@ class Data:
             con.commit()
 
     def save(self, user):
-        # with open('data.dat', 'wb') as file:
-        #     pickle.dump(users, file)
-        
-
         username = user.get_username()
         hashed = user.get_hash()
 
@@ -35,17 +30,6 @@ class Data:
             file.commit()
             
     def load(self, user):
-        '''try:
-
-            file = open('data.dat', 'rb')
-            self.users = pickle.load(file)
-
-        except EOFError:
-            self.users = []
-
-        return self.users'''
-
-
         with sqlite3.connect('data.db') as con:
             cur = con.cursor()
 
@@ -58,12 +42,21 @@ class Data:
         val = row[0]
         return val
 
-    def wipe(self):
-        # with open('data.dat', 'wb') as file:
-        #         pickle.dump([], file)
-
+    def check_for_existing_user(self, username):
         with sqlite3.connect('data.db') as con:
             cur = con.cursor()
-            # Delete all rows from users table
+
+            cur.execute("SELECT EXISTS(SELECT 1 FROM users WHERE username = ?)", (username,))
+
+            val = bool(cur.fetchone()[0])
+
+        if val:
+            return True
+
+        return False
+
+    def wipe(self):
+        with sqlite3.connect('data.db') as con:
+            cur = con.cursor()
             cur.execute("DELETE FROM users")
             con.commit()

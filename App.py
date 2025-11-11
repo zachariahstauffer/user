@@ -10,7 +10,7 @@ class Sign_up:
     def sign_up(self,  username, password):
         new_user = User(username, password)
 
-        if not Verify(password).verify_sign_up():
+        if not Verify().verify_sign_up(username, password):
             return
         print('signed up')
         self.data.save(new_user)
@@ -21,7 +21,7 @@ class Login:
 
     def login(self, username, password):
 
-        exists, correct = Verify(password).verify_login(username)
+        exists, correct = Verify().verify_login(username, password)
 
         if not exists:
             print(f'{username} does not have an account')
@@ -48,8 +48,8 @@ class App(tk.Tk):
 
     def login_button_click(self):
         self.destroy_all()
-        self.textl1 = tk.Text(self, width= 20, height=1)
-        self.textl2 = tk.Text(self, width= 20, height=1)
+        self.textl1 = tk.Text(self, width= 30, height=1, wrap='none', font=('sans-serif', 10))
+        self.textl2 = tk.Text(self, width= 30, height=1, wrap='none', font=('sans-serif', 10))
         self.textl1.pack(anchor='center', pady=20)
         self.textl2.pack(anchor='s')
         submit = tk.Button(self, text="submit", command=self.login_helper)
@@ -57,8 +57,8 @@ class App(tk.Tk):
 
     def sign_up_button_click(self):
         self.destroy_all()
-        self.texts1 = tk.Text(self, width= 20, height=1)
-        self.texts2 = tk.Text(self, width= 20, height=1)
+        self.texts1 = tk.Text(self, width= 30, height=1, wrap='none', font=('sans-serif', 10))
+        self.texts2 = tk.Text(self, width= 30, height=1, wrap='none', font=('sans-serif', 10))
         self.texts1.pack(anchor='center', pady=20)
         self.texts2.pack(anchor='s')
 

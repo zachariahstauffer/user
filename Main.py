@@ -28,7 +28,7 @@ class Display:
 
         new_user = User.User(username, password)
 
-        if not Verify.Verify(password).verify_sign_up():
+        if not Verify.Verify().verify_sign_up(username, password):
             return
         print('signed up')
         self.data.save(new_user)
@@ -37,7 +37,7 @@ class Display:
         username = str(input("Username: "))
         password = str(input("Password: ")).encode('utf-8')
 
-        exists, correct = Verify.Verify(password).verify_login(username)
+        exists, correct = Verify.Verify().verify_login(username, password)
 
         if not exists:
             print(f'{username} does not have an account')
