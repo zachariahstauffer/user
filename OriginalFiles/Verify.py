@@ -8,46 +8,47 @@ class Verify:
     def verify_sign_up(self, username, password):
         val = True
         user_exists = False
+        list_of_flags = []
         has_upper = has_lower = has_special = has_number = has_space = False
 
         user_exists = self.data.check_for_existing_user(username)
 
         if user_exists:
-            print('user already exists')
+            list_of_flags.append('user already exists')
             val = False
 
         if len(password) < 6:
-            print('password must be 6 characters long')
+            list_of_flags.append('password must be 6 characters long')
             val = False
 
         if len(password) > 20:
-            print('password can not be more than 20 characters long')
+            list_of_flags.append('password can not be more than 20 characters long')
             val = False
         
         for char in password:
             has_upper, has_lower, has_special, has_number, has_space = self.requirements(char, has_upper, has_lower, has_special, has_number, has_space)
         
         if not has_upper:
-            print('password must contain at least one uppercase letter')
+            list_of_flags.append('password must contain at least one uppercase letter')
             val = False
 
         if not has_lower:
-            print('password must contain at least one lowercase letter')
+            list_of_flags.append('password must contain at least one lowercase letter')
             val = False
 
         if not has_number:
-            print('password must contain at least one number')
+            list_of_flags.append('password must contain at least one number')
             val = False
 
         if not has_special:
-            print("password must contain at least one special character ['!' , '@', '#', '$', '%', '^', '&']")
+            list_of_flags.append("password must contain at least one special character ['!' , '@', '#', '$', '%', '^', '&']")
             val = False
 
         if not has_space:
-            print('cannot contain spaces')
+            list_of_flags.append('cannot contain spaces')
             val = False
 
-        return val
+        return val, list_of_flags
 
     def requirements(self, char, has_upper, has_lower, has_special, has_number, has_space):
         special = {'!' , '@', "#", '$', '%', '^', '&'}

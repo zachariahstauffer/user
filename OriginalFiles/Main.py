@@ -28,7 +28,11 @@ class Display:
 
         new_user = User.User(username, password)
 
-        if not Verify.Verify().verify_sign_up(username, password):
+        val, list_of_flags = Verify.Verify().verify_sign_up(username, password)
+
+        if not val:
+            for i in list_of_flags:
+                print(f'{i}')
             return
         print('signed up')
         self.data.save(new_user)

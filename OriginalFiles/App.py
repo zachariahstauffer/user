@@ -1,0 +1,114 @@
+import tkinter as tk
+from Data import Data
+from Verify import Verify
+from User import User
+
+class Sign_up:
+    def __init__(self):
+        self.data = Data()
+        self.lm = label_maker()
+    
+    def sign_up(self,  username, password):
+        new_user = User(username, password)
+        val, list_of_flags = Verify().verify_sign_up(username, password)
+
+        if not val:
+            self.lm.label_maker(list_of_flags)
+        
+        self.data.save(new_user)
+
+class Login:
+    def __init__(self):
+        pass
+
+    def login(self, username, password):
+
+        exists, correct = Verify().verify_login(username, password)
+
+        if not exists:
+            print(f'{username} does not have an account')
+            return
+        
+        print(f'{username} was found')
+        
+        if correct:
+            print(f'{username} has logged in')
+            return
+        else:
+            print('wrong password')
+
+class label_maker(tk.Tk):
+    def __init__(self):
+        pass
+
+    def label_maker(self, message = []):
+        if not message is []:
+            return
+        
+        for i in message:
+            msg = f'{i}, '
+
+        label = tk.Label(self, text=msg)
+        label.grid_columnconfigure(0, weight=1)
+        label.grid(row=2, column=0, pady=5)
+            
+class App(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.window()
+
+    def window(self):
+        self.title('quick app')
+        self.config(bg='blue')
+        self.geometry("400x400")
+        self.buttons()
+
+    def login_button_click(self):
+        self.destroy_all()
+        self.textl1 = tk.Text(self, width= 30, height=1, wrap='none', font=('sans-serif', 10))
+        self.textl2 = tk.Text(self, width= 30, height=1, wrap='none', font=('sans-serif', 10))
+        self.grid_columnconfigure(0, weight=1)
+        self.textl1.grid(row=0, column=0, pady=20)
+        self.textl2.grid(row=1, column=0, pady=20)
+        submit = tk.Button(self, text="submit", command=self.login_helper)
+        submit.grid(row=2, column=0)
+
+    def sign_up_button_click(self):
+        self.destroy_all()
+        self.texts1 = tk.Text(self, width= 30, height=1, wrap='none', font=('sans-serif', 10))
+        self.texts2 = tk.Text(self, width= 30, height=1, wrap='none', font=('sans-serif', 10))
+        self.grid_columnconfigure(0, weight=1)
+        self.texts1.grid(row=0, column=0, pady=20)
+        self.texts2.grid(row=1, column=0, pady=20)
+
+        submit = tk.Button(self, text="submit", command=self.sign_up_helper)
+        submit.grid(row=3, column=0, pady=20)
+
+    def buttons(self):
+        self.login = tk.Button(self, text = 'login', command = self.login_button_click)
+        self.signup = tk.Button(self, text = 'sign-up', command = self.sign_up_button_click)
+        self.signup.grid(row=0, column=0, padx=20)
+        self.login.grid(row=0, column=1, padx=20)
+
+    def login_helper(self):
+        login = Login()
+
+        login.login(self.textl1.get('1.0', 'end-1c'), self.textl2.get('1.0', 'end-1c'))
+
+        self.destroy_all()
+        self.buttons
+
+    def sign_up_helper(self):
+        sign_up = Sign_up()
+
+        sign_up.sign_up(str(self.texts1.get('1.0', 'end-1c')), str(self.texts2.get('1.0', 'end-1c')))
+
+        self.destroy_all()
+        self.buttons()
+
+    def destroy_all(self):
+        for i in self.winfo_children():
+            i.destroy()
+
+app = App()
+app.mainloop()
