@@ -60,3 +60,4 @@ class Data:
             cur = con.cursor()
             cur.execute("DELETE FROM users")
             con.commit()
+ 

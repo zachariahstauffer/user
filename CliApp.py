@@ -1,7 +1,6 @@
 import Data
 import User
 import Verify
-# import concurrent.futures
     
 class Display:
     def __init__(self):
@@ -54,8 +53,6 @@ class Display:
             return
         else:
             print('wrong password')
-
-            
 
     def check_data(self, user):
         return self.data.load(user)

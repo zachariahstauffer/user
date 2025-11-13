@@ -15,6 +15,7 @@ class Sign_up:
             return list_of_flags
         
         self.data.save(new_user)
+        return 'Sign up successfull'
 
 class Login:
     def __init__(self):
@@ -45,15 +46,15 @@ class App(tk.Tk):
         self.title('quick app')
         self.config(bg='blue')
         self.geometry("400x400")
-        self.buttons()
+        self.start_window()
 
-    def buttons(self):
-        self.login = tk.Button(self, text = 'login', command = self.login_button_click)
-        self.signup = tk.Button(self, text = 'sign-up', command = self.sign_up_button_click)
+    def start_window(self):
+        self.login = tk.Button(self, text = 'login', command = self.login_page)
+        self.signup = tk.Button(self, text = 'sign-up', command = self.sign_up_page)
         self.signup.grid(row=0, column=0, padx=20)
         self.login.grid(row=0, column=1, padx=20)
 
-    def login_button_click(self):
+    def login_page(self):
         self.destroy_all()
         self.grid_columnconfigure(0, weight=1)
 
@@ -65,7 +66,7 @@ class App(tk.Tk):
         self.textl2.grid(row=1, column=0, pady=20)
         submit.grid(row=2, column=0)
 
-    def sign_up_button_click(self):
+    def sign_up_page(self):
         self.destroy_all()
         self.grid_columnconfigure(0, weight=1)
 
@@ -101,9 +102,14 @@ class App(tk.Tk):
         label.grid_columnconfigure(0, weight=1)
         label.grid(row=2, column=0, pady=5)
 
+    def back(self):
+        self.destroy_all()
+        self.start_window
+
     def destroy_all(self):
         for i in self.winfo_children():
             i.destroy()
 
-app = App()
-app.mainloop()
+if __name__ == '__main__':
+    app = App()
+    app.mainloop()
