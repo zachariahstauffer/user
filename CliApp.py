@@ -38,7 +38,7 @@ class Display:
 
     def login(self):
         username = str(input("Username: "))
-        password = str(input("Password: ")).encode('utf-8')
+        password = str(input("Password: "))
 
         exists, correct = Verify.Verify().verify_login(username, password)
 

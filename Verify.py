@@ -79,5 +79,6 @@ class Verify:
         
         if bcrypt.checkpw(password, hashed):
             return True, True
-        else:
-            return True, False
+        
+
+        return True, False
