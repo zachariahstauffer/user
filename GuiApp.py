@@ -37,7 +37,7 @@ class Login:
         else:
             print('wrong password')
             
-class App(tk.Tk):
+class GuiApp(tk.Tk):
     def __init__(self):
         super().__init__()
         self.window()
@@ -73,10 +73,12 @@ class App(tk.Tk):
         self.texts1 = tk.Text(self, width= 30, height=1, wrap='none', font=('sans-serif', 10))
         self.texts2 = tk.Text(self, width= 30, height=1, wrap='none', font=('sans-serif', 10))
         submit = tk.Button(self, text="submit", command=self.sign_up_helper)
+        back = tk.Button(self, text='back', command=self.login_page)
 
         self.texts1.grid(row=0, column=0, pady=20)
         self.texts2.grid(row=1, column=0, pady=20)
         submit.grid(row=3, column=0, pady=20)
+        back.grid(row=4, column=0, pady=20)
 
     def login_helper(self):
         login = Login()
@@ -111,5 +113,5 @@ class App(tk.Tk):
             i.destroy()
 
 if __name__ == '__main__':
-    app = App()
+    app = GuiApp()
     app.mainloop()
