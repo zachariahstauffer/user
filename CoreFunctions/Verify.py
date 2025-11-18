@@ -11,7 +11,7 @@ class Verify:
         list_of_flags = []
         has_upper = has_lower = has_special = has_number = has_space = False
 
-        user_exists = str(self.data.check_for_existing_user(username)).lower()
+        user_exists = self.data.check_for_existing_user(username)
 
         if user_exists:
             list_of_flags.append('user already exists')
@@ -48,7 +48,10 @@ class Verify:
             list_of_flags.append('cannot contain spaces')
             val = False
 
-        return val, list_of_flags
+        if list_of_flags:
+            return val, list_of_flags
+        
+        return val, []
 
     def requirements(self, char, has_upper, has_lower, has_special, has_number, has_space):
         special = {'!' , '@', "#", '$', '%', '^', '&'}

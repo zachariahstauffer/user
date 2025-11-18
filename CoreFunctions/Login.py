@@ -12,15 +12,15 @@ class Login:
 
         if not exists:
             message.append(f'{username} does not have an account')
-            return message
+            return message, correct
         
         message.append(f'{username} was found')
         
         if correct:
             message.append(f'{username} has logged in')
-            return message
+            return message, correct
         
         message.append('wrong password')
 
         
-        return message
+        return message, correct

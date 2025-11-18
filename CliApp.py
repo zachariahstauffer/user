@@ -30,7 +30,7 @@ class CliApp:
         val, messages = self.sign_up.sign_up(username, password)
 
         if not val:
-            self. sign_up_helper(messages)
+            self.sign_up_helper(messages)
             self.sign_up_prompt()
             print()
 
@@ -41,28 +41,32 @@ class CliApp:
         choice = str(input(f'{username} has signed up, type [l]ogin, [b]ack, or [e]xit: ')).lower()
 
         if choice in ('login', 'l'):
+            print()
             self.login_prompt()
             return
         elif choice in ('back', 'b'):
+            print()
             self.run()
             return
         elif choice in ('exit', 'e'):
             exit()
 
     def login_prompt(self):
-        username = str(input('Type your password: '))
+        username = str(input('Type your username: '))
         password = str(input('Type your password: '))
 
-        messages = self.login.login(username, password)
+        messages, correct = self.login.login(username, password)
 
         self.login_helper(messages)
 
-        return messages
+        if correct:
+            self.user_settings(username)
 
-    def user_settins(self, username):
+    def user_settings(self, username):
         choice = str(input('[l]ogout, [d]elete: ')).lower()
 
         if choice in ('logout', 'l'):
+            print(f'{username} has logged out')
             exit()
         elif choice in ('delete', 'd'):
             self.data.delete_user(username)
@@ -161,4 +165,8 @@ class CliApp:
         return self.data.load(user)
    
 if __name__ == '__main__':
-    CliApp().run()
+    
+    try:
+        CliApp().run()
+    except KeyboardInterrupt:
+        print("\nprogram ends")

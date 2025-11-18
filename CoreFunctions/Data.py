@@ -58,7 +58,7 @@ class Data:
     def delete_user(self, username):
         with sqlite3.connect('data.db') as con:
             cur = con.cursor()
-            cur.execute("DELETE FROM users WHERE username = ?", (username))
+            cur.execute("DELETE FROM users WHERE username = ?", (username,))
             con.commit()
 
     def wipe(self):
