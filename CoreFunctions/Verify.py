@@ -1,5 +1,5 @@
 import bcrypt
-from Data import Data
+from CoreFunctions.Data import Data
 
 class Verify:
     def __init__(self):
@@ -11,7 +11,7 @@ class Verify:
         list_of_flags = []
         has_upper = has_lower = has_special = has_number = has_space = False
 
-        user_exists = self.data.check_for_existing_user(username)
+        user_exists = str(self.data.check_for_existing_user(username)).lower()
 
         if user_exists:
             list_of_flags.append('user already exists')

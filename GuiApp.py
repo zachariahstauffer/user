@@ -1,42 +1,7 @@
 import tkinter as tk
-from Data import Data
-from Verify import Verify
-from User import User
+from CoreFunctions.SignUp import Sign_up
+from CoreFunctions.Login import Login
 
-class Sign_up:
-    def __init__(self):
-        self.data = Data()
-    
-    def sign_up(self,  username, password):
-        new_user = User(username, password)
-        val, list_of_flags = Verify().verify_sign_up(username, password)
-
-        if not val:
-            return list_of_flags
-        
-        self.data.save(new_user)
-        return 'Sign up successfull'
-
-class Login:
-    def __init__(self):
-        pass
-
-    def login(self, username, password):
-
-        exists, correct = Verify().verify_login(username, password)
-
-        if not exists:
-            print(f'{username} does not have an account')
-            return
-        
-        print(f'{username} was found')
-        
-        if correct:
-            print(f'{username} has logged in')
-            return
-        else:
-            print('wrong password')
-            
 class GuiApp(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -93,8 +58,7 @@ class GuiApp(tk.Tk):
         self.label_maker(flags)
 
     def label_maker(self, message = []):
-        if message is []:
-            return
+        
         msg = ''
         for i in message:
             msg += f'{i} \n'

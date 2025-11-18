@@ -1,26 +1,90 @@
-import Data
-import User
-import Verify
+from CoreFunctions.SignUp import Sign_up
+from CoreFunctions.Login import Login
+from CoreFunctions.Data import Data
     
 class CliApp:
     def __init__(self):
-        self.data = Data.Data()
+        self.sign_up = Sign_up()
+        self.login = Login()
+        self.data = Data()
 
     def run(self):
         choice = str(input("[s]ign-up or [l]ogin: "))
 
         if choice == 'sign-up' or choice == 's':
-            self.sign_up()
+            self.sign_up_prompt()
 
         elif choice == 'login' or choice == 'l':
-            self.login()
+            self.login_prompt()
 
         elif choice == 'wipe' or choice == 'w':
-            Data.Data().wipe()
+            self.data.wipe()
             
         else:
             print('error')
+   
+    def sign_up_prompt(self):
+        username = str(input('Make a username: '))
+        password = str(input('Make a password: '))
 
+        val, messages = self.sign_up.sign_up(username, password)
+
+        if not val:
+            self. sign_up_helper(messages)
+            self.sign_up_prompt()
+            print()
+
+            return
+
+        self.login_helper(messages)
+
+        choice = str(input(f'{username} has signed up, type [l]ogin, [b]ack, or [e]xit: ')).lower()
+
+        if choice in ('login', 'l'):
+            self.login_prompt()
+            return
+        elif choice in ('back', 'b'):
+            self.run()
+            return
+        elif choice in ('exit', 'e'):
+            exit()
+
+    def login_prompt(self):
+        username = str(input('Type your password: '))
+        password = str(input('Type your password: '))
+
+        messages = self.login.login(username, password)
+
+        self.login_helper(messages)
+
+        return messages
+
+    def user_settins(self, username):
+        choice = str(input('[l]ogout, [d]elete: ')).lower()
+
+        if choice in ('logout', 'l'):
+            exit()
+        elif choice in ('delete', 'd'):
+            self.data.delete_user(username)
+            print(f'{username} has been deleted')
+            exit()
+
+    def sign_up_helper(self, messages):
+        print()
+        message = ''
+        for i in messages:
+            message += f'{i}\n'
+
+        print(message)
+
+    def login_helper(self, messages):
+        print()
+        message = ''
+        for i in messages:
+            message += f'{i}\n'
+        print(message)
+    
+    '''
     def sign_up(self):
         print()
 
@@ -60,8 +124,6 @@ class CliApp:
         elif choice in ('exit','e'):
             exit()
 
-
-
     def login(self):
         print()
 
@@ -94,7 +156,7 @@ class CliApp:
 
         elif choice in ('exit', 'e'):
             exit()
-
+    '''
     def check_data(self, user):
         return self.data.load(user)
    
