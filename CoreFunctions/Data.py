@@ -16,9 +16,8 @@ class Data:
                 """)
             con.commit()
 
-    def save(self, user):
-        username = user.get_username()
-        hashed = user.get_hash()
+    def save(self, username, hashed_password):
+
 
         with sqlite3.connect('data.db') as file:
             cur = file.cursor()
@@ -26,21 +25,22 @@ class Data:
             cur.execute("""
                 INSERT INTO users (username, password_hash)
                 VALUES (?, ?)
-                """, (username, hashed))
+                """, (username, hashed_password))
             file.commit()
             
     def load(self, user):
         with sqlite3.connect('data.db') as con:
             cur = con.cursor()
 
-            cur.execute("SELECT password_hash FROM users WHERE username = ?", (user,))
+            cur.execute("SELECT id, password_hash FROM users WHERE username = ?", (user,))
             row = cur.fetchone()
 
         if row is None:
-            return None
+            return None, None
         
-        val = row[0]
-        return val
+        id, val = row
+
+        return id, val
 
     def check_for_existing_user(self, username):
         with sqlite3.connect('data.db') as con:
@@ -61,9 +61,20 @@ class Data:
             cur.execute("DELETE FROM users WHERE username = ?", (username,))
             con.commit()
 
+    def admin(self, username, password):
+        with sqlite3.connect('data.db') as con:
+
+            cur = con.cursor()
+            # cur.execute('''INSERT INTO users (id, username, password_hash) VALUES (?, ?, ?)''', (0, username, password,))
+            cur.execute('SELECT username, password_hash FROM users WHERE id = ?', (0, )) 
+            row = cur.fetchone()
+
+            username, password = row
+
+            return username, password
+        
     def wipe(self):
         with sqlite3.connect('data.db') as con:
             cur = con.cursor()
-            cur.execute("DELETE FROM users")
+            cur.execute("DELETE FROM users WHERE id <> ?", (0,))
             con.commit()
- 

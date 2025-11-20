@@ -52,30 +52,9 @@ class Verify:
             return val, list_of_flags
         
         return val, []
-
-    def requirements(self, char, has_upper, has_lower, has_special, has_number, has_space):
-        special = {'!' , '@', "#", '$', '%', '^', '&'}
-
-        if 20 != ord(char):
-            has_space = True
-
-        if 48 <= ord(char) <= 57:
-            has_number = True
-            
-        if 65 <= ord(char) <= 90:
-            has_upper = True
-
-        if 97 <= ord(char) <= 122:
-            has_lower = True
-
-        if char in special:
-            has_special = True
-
-        return has_upper, has_lower, has_special, has_number, has_space
-
-    def verify_login(self,username, password):
+  
+    def verify_login(self,username, password, hashed):
         password = password.encode('utf-8')
-        hashed = self.data.load(username)
         
         if hashed is None:
             return False, False
@@ -85,3 +64,39 @@ class Verify:
         
 
         return True, False
+    
+    def admin_login(self, username, password):
+        
+        username, hashed = self.data.admin(username, password)
+        val = False
+        bpwd = str(password).encode('utf-8')
+
+        if not username:
+            val = False
+            return 'wrong username', val
+        
+        if bcrypt.checkpw(bpwd, hashed):
+            val = True
+            return 'admin login succsessfull', val
+        
+        return 'error', val
+            
+    def requirements(self, char, has_upper, has_lower, has_special, has_number, has_space):
+            special = {'!' , '@', "#", '$', '%', '^', '&'}
+
+            if 20 != ord(char):
+                has_space = True
+
+            if 48 <= ord(char) <= 57:
+                has_number = True
+                
+            if 65 <= ord(char) <= 90:
+                has_upper = True
+
+            if 97 <= ord(char) <= 122:
+                has_lower = True
+
+            if char in special:
+                has_special = True
+
+            return has_upper, has_lower, has_special, has_number, has_space
