@@ -53,33 +53,21 @@ class Verify:
         
         return val, []
   
-    def verify_login(self,username, password, hashed):
+    def verify_login(self, id, username, password, hashed):
+        is_admin = False
+
         password = password.encode('utf-8')
         
         if hashed is None:
-            return False, False
+            return False, False, is_admin
+        
+        if id == 0:
+            isAdmin = True
         
         if bcrypt.checkpw(password, hashed):
-            return True, True
+            return True, True, is_admin
         
-
-        return True, False
-    
-    def admin_login(self, username, password):
-        
-        username, hashed = self.data.admin(username, password)
-        val = False
-        bpwd = str(password).encode('utf-8')
-
-        if not username:
-            val = False
-            return 'wrong username', val
-        
-        if bcrypt.checkpw(bpwd, hashed):
-            val = True
-            return 'admin login succsessfull', val
-        
-        return 'error', val
+        return True, False, is_admin
             
     def requirements(self, char, has_upper, has_lower, has_special, has_number, has_space):
             special = {'!' , '@', "#", '$', '%', '^', '&'}

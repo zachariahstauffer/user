@@ -9,3 +9,11 @@ class AdminSettings:
 
     def wipe_table(self):
         self.data.wipe()
+
+    def list_all_users(self):
+        list = self.data.load_all_users()
+        list2 = ''
+        for i in list:
+            list2 += f'{i}\n'
+
+        return list2

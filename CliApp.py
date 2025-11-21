@@ -1,18 +1,14 @@
 from CoreFunctions.SignUp import Sign_up
 from CoreFunctions.Login import Login
-from CoreFunctions.Data import Data
-from CoreFunctions.Verify import Verify
 from CoreFunctions.AdminSettings import AdminSettings
 from CoreFunctions.User import User
-
 
 class CliApp:
     def __init__(self):
         self.sign_up = Sign_up()
         self.login = Login()
-        self.data = Data()
         self.admin = AdminSettings()
-        self.user = User
+        self.user = None
 
     def run(self):
         choice = str(input("[s]ign-up or [l]ogin: "))
@@ -23,12 +19,9 @@ class CliApp:
         elif choice == 'login' or choice == 'l':
             self.login_prompt()
 
-        elif choice in ('admin', 'a'):
-            self.admin_login()
-
         else:
             print('error')
-   
+
     def sign_up_prompt(self):
         username = str(input('Make a username: '))
         password = str(input('Make a password: '))
@@ -61,68 +54,71 @@ class CliApp:
         username = str(input('Type your username: '))
         password = str(input('Type your password: '))
 
-        messages, correct, self.user = self.login.login(username, password)
+        messages, correct_password, self.user = self.login.login(username, password)
+
+        if not correct_password:
+            self.message_handler(messages)
 
         self.message_handler(messages)
+        self.admin_check()
 
-        if correct:
-            self.user_settings(username)
-
-    def admin_login(self):
-        username = str(input('type in your admin username: ')).lower()
-        password = str(input('type in your admin password: '))
-
-
-        message, val = Verify().admin_login(username, password)
-        print(message)
-
-        if val:
-            self.admin_prompts()
+    def user_settings_prompts(self):
+        if self.user is None:
             return
 
-    def user_settings(self, username):
-        choice = str(input('[l]ogout, [d]elete: ')).lower()
+        print('''
+              1. change password
+              2. delete account
+              3. logout
+              ''')
 
-        if choice in ('logout', 'l'):
-            print(f'{username} has logged out')
+        choice = input('Type the number')
+
+        if choice == '1':
+            self.user.change_password()
+        elif choice == '2':
+            self.user.delete_account()
+        elif choice == '3':
             exit()
-        elif choice in ('delete', 'd'):
-            self.data.delete_user(username)
-            print(f'{username} has been deleted')
-            exit()
+        else:
+            print('error')
 
-    '''
-    def sign_up_helper(self, messages):
-        pass
+    def admin_settings_prompts(self):
+        print('''
+              1. delete a user
+              2. wipe all data
+              3. list all users
+              ''')
+        
+        choice = input('type a number: ')
 
-    def login_helper(self, messages):
-        pass
-    '''
+        if choice == '1':
+            pass
+        elif choice == '2':
+            self.admin.wipe_table()
+        elif choice == '3':
+            list = self.admin.list_all_users()
+            print(list)
+        else:
+            print('toast')
+
+    def admin_check(self):
+        if self.user is None:
+            print('No User Loaded')
+            return
+
+        if self.user.get_user_id() == 0:
+            self.admin_settings_prompts()
+        else:
+            self.user_settings_prompts()
 
     def message_handler(self, messages):
         print()
         message = ''
         for i in messages:
             message += f'{i}\n'
-        print(message)
+        print(message + '\n')
 
-    def admin_prompts(self):
-        print('''
-              1. Delete a User
-              2. Wipe All Data
-              ''')
-
-
-        choice = str(input("type the number: "))
-
-        if choice == 1:
-            user = input('username of the user to be deleted')
-            
-            self.admin.delete_user(user)
-
-        elif choice == 2:
-            self.admin.wipe_table()
- 
 if __name__ == '__main__':
     
     try:

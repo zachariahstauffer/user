@@ -55,23 +55,21 @@ class Data:
 
         return False
 
-    def delete_user(self, username):
+    def load_all_users(self):
         with sqlite3.connect('data.db') as con:
             cur = con.cursor()
-            cur.execute("DELETE FROM users WHERE username = ?", (username,))
+
+            cur.execute("SELECT id, username, password_hash FROM users")
+
+            rows = cur.fetchall()
+
+        return rows
+
+    def delete_user(self, id):
+        with sqlite3.connect('data.db') as con:
+            cur = con.cursor()
+            cur.execute("DELETE FROM users WHERE username = ?", (id,))
             con.commit()
-
-    def admin(self, username, password):
-        with sqlite3.connect('data.db') as con:
-
-            cur = con.cursor()
-            # cur.execute('''INSERT INTO users (id, username, password_hash) VALUES (?, ?, ?)''', (0, username, password,))
-            cur.execute('SELECT username, password_hash FROM users WHERE id = ?', (0, )) 
-            row = cur.fetchone()
-
-            username, password = row
-
-            return username, password
         
     def wipe(self):
         with sqlite3.connect('data.db') as con:
