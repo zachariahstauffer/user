@@ -72,10 +72,11 @@ class CliApp:
               3. logout
               ''')
 
-        choice = input('Type the number')
+        choice = input('Type the number: ')
 
         if choice == '1':
-            self.user.change_password()
+            new_password = input('new password')
+            self.user.change_password(new_password)
         elif choice == '2':
             self.user.delete_account()
         elif choice == '3':

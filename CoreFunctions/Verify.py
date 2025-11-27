@@ -9,50 +9,18 @@ class Verify:
         val = True
         user_exists = False
         list_of_flags = []
-        has_upper = has_lower = has_special = has_number = has_space = False
+
 
         user_exists = self.data.check_for_existing_user(username)
 
+        val, list_of_flags = self.verify_password(password)
+
+        return val, list_of_flags
+        
         if user_exists:
             list_of_flags.append('user already exists')
             val = False
 
-        if len(password) < 6:
-            list_of_flags.append('password must be 6 characters long')
-            val = False
-
-        if len(password) > 20:
-            list_of_flags.append('password can not be more than 20 characters long')
-            val = False
-        
-        for char in password:
-            has_upper, has_lower, has_special, has_number, has_space = self.requirements(char, has_upper, has_lower, has_special, has_number, has_space)
-        
-        if not has_upper:
-            list_of_flags.append('password must contain at least one uppercase letter')
-            val = False
-
-        if not has_lower:
-            list_of_flags.append('password must contain at least one lowercase letter')
-            val = False
-
-        if not has_number:
-            list_of_flags.append('password must contain at least one number')
-            val = False
-
-        if not has_special:
-            list_of_flags.append("password must contain at least one special character ['!' , '@', '#', '$', '%', '^', '&']")
-            val = False
-
-        if not has_space:
-            list_of_flags.append('cannot contain spaces')
-            val = False
-
-        if list_of_flags:
-            return val, list_of_flags
-        
-        return val, []
-  
     def verify_login(self, id, username, password, hashed):
         is_admin = False
 
@@ -88,3 +56,47 @@ class Verify:
                 has_special = True
 
             return has_upper, has_lower, has_special, has_number, has_space
+
+    def verify_password(self, password):
+        val = True
+        list_of_flags = []
+
+        has_upper = has_lower = has_special = has_number = has_space = False
+
+        
+
+        if len(password) < 6:
+            list_of_flags.append('password must be 6 characters long')
+            val = False
+
+        if len(password) > 20:
+            list_of_flags.append('password can not be more than 20 characters long')
+            val = False
+        
+        for char in password:
+            has_upper, has_lower, has_special, has_number, has_space = self.requirements(char, has_upper, has_lower, has_special, has_number, has_space)
+        
+        if not has_upper:
+            list_of_flags.append('password must contain at least one uppercase letter')
+            val = False
+
+        if not has_lower:
+            list_of_flags.append('password must contain at least one lowercase letter')
+            val = False
+
+        if not has_number:
+            list_of_flags.append('password must contain at least one number')
+            val = False
+
+        if not has_special:
+            list_of_flags.append("password must contain at least one special character ['!' , '@', '#', '$', '%', '^', '&']")
+            val = False
+
+        if not has_space:
+            list_of_flags.append('cannot contain spaces')
+            val = False
+
+        if list_of_flags:
+            return val, list_of_flags
+        
+        return val, ['Password strong']
