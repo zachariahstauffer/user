@@ -75,3 +75,6 @@ Thumbs.db
 .env
 
 test.py
+
+.vscode/
+CoreFunctions/__pycache__/
