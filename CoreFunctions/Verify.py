@@ -15,12 +15,12 @@ class Verify:
 
         val, list_of_flags = self.verify_password(password)
 
+        if user_exists:
+                    list_of_flags.append('user already exists')
+                    val = False
+
         return val, list_of_flags
         
-        if user_exists:
-            list_of_flags.append('user already exists')
-            val = False
-
     def verify_login(self, id, username, password, hashed):
         is_admin = False
 
@@ -30,7 +30,7 @@ class Verify:
             return False, False, is_admin
         
         if id == 0:
-            isAdmin = True
+            is_Admin = True
         
         if bcrypt.checkpw(password, hashed):
             return True, True, is_admin
@@ -40,7 +40,7 @@ class Verify:
     def requirements(self, char, has_upper, has_lower, has_special, has_number, has_space):
             special = {'!' , '@', "#", '$', '%', '^', '&'}
 
-            if 20 != ord(char):
+            if 20 == ord(char):
                 has_space = True
 
             if 48 <= ord(char) <= 57:
@@ -62,8 +62,6 @@ class Verify:
         list_of_flags = []
 
         has_upper = has_lower = has_special = has_number = has_space = False
-
-        
 
         if len(password) < 6:
             list_of_flags.append('password must be 6 characters long')

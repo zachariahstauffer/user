@@ -75,6 +75,7 @@ Thumbs.db
 .env
 
 test.py
+StressTest.py
 
 .vscode/
 CoreFunctions/__pycache__/

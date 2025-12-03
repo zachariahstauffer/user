@@ -10,7 +10,7 @@ class Data:
 
             cur.execute("""
                 CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id INTEGER PRIMARY KEY,
                 username TEXT,
                 password_hash BLOB)
                 """)
@@ -59,7 +59,7 @@ class Data:
         with sqlite3.connect('data.db') as con:
             cur = con.cursor()
 
-            cur.execute("SELECT id, username, password_hash FROM users")
+            cur.execute("SELECT * FROM users")
 
             rows = cur.fetchall()
 
@@ -68,7 +68,7 @@ class Data:
     def delete_user(self, id):
         with sqlite3.connect('data.db') as con:
             cur = con.cursor()
-            cur.execute("DELETE FROM users WHERE username = ?", (id,))
+            cur.execute("DELETE FROM users WHERE id = ?", (id,))
             con.commit()
         
     def wipe(self):

@@ -8,12 +8,13 @@ class Sign_up:
     
     def sign_up(self,  username, password):
         
-        hashed_password = self.text_to_hash(password)
 
         val, list_of_flags = Verify().verify_sign_up(username, password)
 
         if not val:
             return val, list_of_flags
+        
+        hashed_password = self.text_to_hash(password)
         
         self.data.save(username, hashed_password)
         return val, ['Sign up successfull']

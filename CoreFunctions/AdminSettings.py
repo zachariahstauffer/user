@@ -1,4 +1,4 @@
-from Data import Data
+from CoreFunctions.Data import Data
 
 class AdminSettings:
     def __init__(self):
