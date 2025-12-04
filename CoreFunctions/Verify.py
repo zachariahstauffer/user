@@ -40,7 +40,7 @@ class Verify:
     def requirements(self, char, has_upper, has_lower, has_special, has_number, has_space):
             special = {'!' , '@', "#", '$', '%', '^', '&'}
 
-            if 20 == ord(char):
+            if 20 != ord(char):
                 has_space = True
 
             if 48 <= ord(char) <= 57:
