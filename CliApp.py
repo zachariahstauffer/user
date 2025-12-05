@@ -1,13 +1,10 @@
-from CoreFunctions.SignUp import Sign_up
-from CoreFunctions.Login import Login
-from CoreFunctions.AdminSettings import AdminSettings
-from CoreFunctions.User import User
+from CoreFunctions import SignUpClass, LoginClass, AdminSettingsClass
 
 class CliApp:
     def __init__(self):
-        self.sign_up = Sign_up()
-        self.login = Login()
-        self.admin = AdminSettings()
+        self.sign_up = SignUpClass()
+        self.login = LoginClass()
+        self.admin = AdminSettingsClass()
         self.user = None
 
     def run(self):

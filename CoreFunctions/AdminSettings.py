@@ -1,8 +1,8 @@
-from CoreFunctions.Data import Data
+from .Data import DataClass
 
-class AdminSettings:
+class AdminSettingsClass:
     def __init__(self):
-        self.data = Data()
+        self.data = DataClass()
 
     def delete_user(self, username):
         self.data.delete_user(username)

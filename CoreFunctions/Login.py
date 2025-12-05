@@ -1,11 +1,11 @@
-from CoreFunctions.Verify import Verify
-from CoreFunctions.Data import Data
-from CoreFunctions.User import User
+from .Verify import VerifyClass
+from .Data import DataClass
+from .User import UserClass
 
-class Login:
+class LoginClass:
     def __init__(self):
-        self.verify = Verify()
-        self.data = Data()
+        self.verify = VerifyClass()
+        self.data = DataClass()
 
     def login(self, username, password):
         message = []
@@ -22,7 +22,7 @@ class Login:
         message.append(f'{username} was found')
         
         if correct_password:
-            user = User(id, username, is_admin)
+            user = UserClass(id, username, is_admin)
 
             message.append(f'{username} has logged in')
 

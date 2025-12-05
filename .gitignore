@@ -10,6 +10,7 @@ __pycache__/
 .Python
 env/
 venv/
+.venv/
 ENV/
 build/
 develop-eggs/
@@ -76,6 +77,10 @@ Thumbs.db
 
 test.py
 StressTest.py
+WebApp.py
+Static/
+templates/
+.html
 
 .vscode/
 CoreFunctions/__pycache__/

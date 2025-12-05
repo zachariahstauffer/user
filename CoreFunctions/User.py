@@ -1,8 +1,8 @@
-from CoreFunctions.Verify import Verify
-from CoreFunctions.Data import Data
+from .Verify import VerifyClass
+from .Data import DataClass
 
 
-class User:
+class UserClass:
     def __init__(self, id, username: str, is_admin: bool):
         self.id = id
         self.username = username
@@ -15,7 +15,7 @@ class User:
         return self.username
     
     def change_password(self, new_password):
-        val, list = Verify().verify_password(new_password)
+        val, list = VerifyClass().verify_password(new_password)
         message = ''
 
         for i in list:
@@ -24,6 +24,6 @@ class User:
         return message
 
     def delete_account(self):
-        Data().delete_user(self.username)
+        DataClass().delete_user(self.username)
     
     

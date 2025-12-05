@@ -1,15 +1,15 @@
-from CoreFunctions.Data import Data
-from CoreFunctions.Verify import Verify
+from .Data import DataClass
+from .Verify import VerifyClass
 import bcrypt
 
-class Sign_up:
+class SignUpClass:
     def __init__(self):
-        self.data = Data()
+        self.data = DataClass()
     
     def sign_up(self,  username, password):
         
 
-        val, list_of_flags = Verify().verify_sign_up(username, password)
+        val, list_of_flags = VerifyClass().verify_sign_up(username, password)
 
         if not val:
             return val, list_of_flags

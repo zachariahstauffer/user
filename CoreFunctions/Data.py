@@ -1,12 +1,13 @@
 import sqlite3
 
-class Data:
+class DataClass:
     def __init__(self):
         self.create_table()
 
     def create_table(self):
         with sqlite3.connect('data.db') as con:
             cur = con.cursor()
+            cur.execute('PRAGMA journal_mode = WAL')
 
             cur.execute("""
                 CREATE TABLE IF NOT EXISTS users (

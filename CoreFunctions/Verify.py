@@ -1,9 +1,9 @@
 import bcrypt
-from CoreFunctions.Data import Data
+from .Data import DataClass
 
-class Verify:
+class VerifyClass:
     def __init__(self):
-        self.data = Data()
+        self.data = DataClass()
 
     def verify_sign_up(self, username, password):
         val = True
