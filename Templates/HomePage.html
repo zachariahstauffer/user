@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="/static/css/style.css">
+
         <title>FastAPI Buttons</title>
     </head>
     <body>
         <h1>{{ message }}</h1>
-        <form action="/signup" method="get">
-                <button type="submit">Sign up</button>
-        </form>
+        <a href="/signup" class="btn btn-signup">Sign Up</a><br><br>
+        <a href="/login" class="btn btn-login">Login</a>
 
-        <form action="/login" method="get">
-            <button type="submit">Login</button>
-        </form>
+
+        </div>
     </body>
 </html>

@@ -12,6 +12,7 @@ class DataClass:
             cur.execute("""
                 CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY,
+                admin BOOLEAN,
                 username TEXT,
                 password_hash BLOB)
                 """)
@@ -19,29 +20,28 @@ class DataClass:
 
     def save(self, username, hashed_password):
 
-
         with sqlite3.connect('data.db') as file:
             cur = file.cursor()
 
             cur.execute("""
-                INSERT INTO users (username, password_hash)
-                VALUES (?, ?)
-                """, (username, hashed_password))
+                INSERT INTO users (admin, username, password_hash)
+                VALUES (?, ?, ?)
+                """, (False, username, hashed_password))
             file.commit()
             
     def load(self, user):
         with sqlite3.connect('data.db') as con:
             cur = con.cursor()
 
-            cur.execute("SELECT id, password_hash FROM users WHERE username = ?", (user,))
+            cur.execute("SELECT id, admin, password_hash FROM users WHERE username = ?", (user,))
             row = cur.fetchone()
 
         if row is None:
-            return None, None
+            return None, None, None
         
-        id, val = row
+        id, admin, val = row
 
-        return id, val
+        return id, admin, val
 
     def check_for_existing_user(self, username):
         with sqlite3.connect('data.db') as con:
@@ -72,8 +72,32 @@ class DataClass:
             cur.execute("DELETE FROM users WHERE id = ?", (id,))
             con.commit()
         
+    def change_password(self, id, new_hash):
+        with sqlite3.connect('data.db') as con:
+            cur = con.cursor()
+
+            cur.execute("""
+                        UPDATE users 
+                        SET password_hash = ? 
+                        WHERE id = ?
+                        """, (new_hash, id))
+            con.commit()
+
+    def change_admin_status(self, id, status):
+
+        with sqlite3.connect('data.db') as con:
+            cur = con.cursor()
+
+            cur.execute("""
+                        UPDATE users
+                        SET admin = ?
+                        WHERE id = ?
+                        """, (status, id))
+            
+            con.commit()
+
     def wipe(self):
         with sqlite3.connect('data.db') as con:
             cur = con.cursor()
-            cur.execute("DELETE FROM users WHERE id <> ?", (0,))
+            cur.execute("DELETE FROM users WHERE admin <> ?", (True,))
             con.commit()

@@ -1,5 +1,8 @@
 from .Verify import VerifyClass
 from .Data import DataClass
+from .SignUp import SignUpClass
+import bcrypt
+
 
 
 class UserClass:
@@ -21,9 +24,14 @@ class UserClass:
         for i in list:
             message += f'{i}'
 
+        if val:
+            new_password = SignUpClass().text_to_hash(new_password)
+            DataClass().change_password(self.id, new_password)
+
         return message
 
     def delete_account(self):
         DataClass().delete_user(self.username)
+
     
     

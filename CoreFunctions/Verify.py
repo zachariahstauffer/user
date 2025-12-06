@@ -21,21 +21,16 @@ class VerifyClass:
 
         return val, list_of_flags
         
-    def verify_login(self, id, username, password, hashed):
-        is_admin = False
-
+    def verify_login(self, password, hashed):
         password = password.encode('utf-8')
         
         if hashed is None:
-            return False, False, is_admin
-        
-        if id == 0:
-            is_Admin = True
+            return False, False
         
         if bcrypt.checkpw(password, hashed):
-            return True, True, is_admin
+            return True, True
         
-        return True, False, is_admin
+        return True, False
             
     def requirements(self, char, has_upper, has_lower, has_special, has_number, has_space):
             special = {'!' , '@', "#", '$', '%', '^', '&'}

@@ -1,16 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
+        <link rel="stylesheet" href="/static/css/style.css">
         <title>SignUp</title>
     </head>
     <body>
-        <form action="/signup" method="post">
-            <label for="username">Username: </label><br>
-            <input type="text" id="username" name="username"><br>
-            <label for="password">Password: </label><br>
-            <input type="text" id="password" name="password"><br><br>
-            <input type="submit" value="submit">
-        </form>
+
+        {% if messages %}
+            {% if success %}
+            <div class="alert alert-success">
+        {% else %}
+            <div class="alert alert-danger">
+        {% endif %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="signup">
+            <form action="/signup" method="post">
+                <label for="username">Username: </label><br>
+                <input type="text" id="username" name="username", autocomplete="off"><br>
+                <label for="password">Password: </label><br>
+                <input type="password" id="password" name="password" autocomplete="off"><br><br>
+                <input type="submit" value="submit"><br><br>
+            </form>
+        </div>
+
+        <div class="back">
+            <a href="/" class="btn btn-back">Back to home</a>
+        </div>
     </body>
 </html>

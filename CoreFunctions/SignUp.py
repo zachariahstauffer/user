@@ -9,18 +9,19 @@ class SignUpClass:
     def sign_up(self,  username, password):
         
 
-        val, list_of_flags = VerifyClass().verify_sign_up(username, password)
+        val, messages = VerifyClass().verify_sign_up(username, password)
 
         if not val:
-            return val, list_of_flags
+            return val, messages
         
         hashed_password = self.text_to_hash(password)
         
         self.data.save(username, hashed_password)
-        return val, ['Sign up successfull']
+        messages.append('Sign up successfull')
+        return val, messages
     
 
     def text_to_hash(self, password):
         password = password.encode('utf-8')
-        salt = bcrypt.gensalt()
+        salt = bcrypt.gensalt(10)
         return bcrypt.hashpw(password, salt)

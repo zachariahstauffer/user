@@ -10,9 +10,9 @@ class LoginClass:
     def login(self, username, password):
         message = []
         user = None
-        id, hashed_password = self.data.load(username)
+        id, status, hashed_password = self.data.load(username)
 
-        exists, correct_password, is_admin = self.verify.verify_login(id ,username, password, hashed_password)
+        exists, correct_password = self.verify.verify_login(password, hashed_password)
 
         if not exists:
             message.append(f'{username} does not have an account')
@@ -20,6 +20,12 @@ class LoginClass:
             return message, correct_password, user
         
         message.append(f'{username} was found')
+
+        if status:
+            is_admin = True
+
+        elif not status:
+            is_admin = False
         
         if correct_password:
             user = UserClass(id, username, is_admin)
