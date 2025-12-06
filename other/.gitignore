@@ -75,12 +75,7 @@ Thumbs.db
 # Secrets
 .env
 
-test.py
-StressTest.py
-WebApp.py
-Static/
-templates/
-.html
+
 
 .vscode/
 CoreFunctions/__pycache__/
