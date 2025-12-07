@@ -5,15 +5,16 @@
         <title>SignUp</title>
     </head>
     <body>
-
+        
         {% if messages %}
             {% if success %}
             <div class="alert alert-success">
-        {% else %}
+            {% else %}
             <div class="alert alert-danger">
-        {% endif %}
+            {% endif %}
+
             {% for message in messages %}
-                <p>{{ message }}</p>
+                <p class="message">{{ message }}</p>
             {% endfor %}
             </div>
         {% endif %}

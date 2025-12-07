@@ -3,13 +3,11 @@ from .Data import DataClass
 from .SignUp import SignUpClass
 import bcrypt
 
-
-
 class UserClass:
-    def __init__(self, id, username: str, is_admin: bool):
+    def __init__(self, id, username: str, admin_status: bool):
         self.id = id
         self.username = username
-        self.is_admin = is_admin
+        self.admin_status = admin_status
 
     def get_user_id(self):
         return self.id
@@ -17,21 +15,19 @@ class UserClass:
     def get_username(self):
         return self.username
     
+    def get_admin(self):
+        return self.admin_status
+
     def change_password(self, new_password):
         val, list = VerifyClass().verify_password(new_password)
-        message = ''
-
-        for i in list:
-            message += f'{i}'
 
         if val:
+            list.append("password is strong")
             new_password = SignUpClass().text_to_hash(new_password)
             DataClass().change_password(self.id, new_password)
 
-        return message
+        return val, list
 
     def delete_account(self):
-        DataClass().delete_user(self.username)
+        DataClass().delete_user(self.id)
 
-    
-    

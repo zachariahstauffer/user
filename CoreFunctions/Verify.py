@@ -16,7 +16,7 @@ class VerifyClass:
         val, list_of_flags = self.verify_password(password)
 
         if user_exists:
-                    list_of_flags.append('user already exists')
+                    list_of_flags.insert(0, 'user already exists')
                     val = False
 
         return val, list_of_flags
@@ -82,7 +82,7 @@ class VerifyClass:
             val = False
 
         if not has_special:
-            list_of_flags.append("password must contain at least one special character ['!' , '@', '#', '$', '%', '^', '&']")
+            list_of_flags.append("password must contain at least one special character (!, @, #, $, %, ^, &)")
             val = False
 
         if not has_space:
@@ -91,5 +91,6 @@ class VerifyClass:
 
         if list_of_flags:
             return val, list_of_flags
-        
-        return val, ['Password strong']
+
+
+        return val, list_of_flags
