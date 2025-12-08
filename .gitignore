@@ -78,6 +78,8 @@ Thumbs.db
 data.db
 data.db-shm
 data.db-wal
+heavy_stress.py
+StressTest.py
 http_stress.py
 
 .vscode/
