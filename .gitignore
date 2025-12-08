@@ -75,7 +75,6 @@ Thumbs.db
 # Secrets
 .env
 
-test.py
 data.db
 data.db-shm
 data.db-wal
