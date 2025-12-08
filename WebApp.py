@@ -130,4 +130,4 @@ def make_user_object(request: Request):
     return user
 
 if __name__=='__main__':
-    uvicorn.run("WebApp:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("WebApp:app", host="localhost", port=8000, reload=True)
