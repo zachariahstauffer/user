@@ -10,6 +10,7 @@ __pycache__/
 .Python
 env/
 venv/
+.venv/
 ENV/
 build/
 develop-eggs/
@@ -73,3 +74,11 @@ Thumbs.db
 
 # Secrets
 .env
+
+data.db
+data.db-shm
+data.db-wal
+http_stress.py
+
+.vscode/
+CoreFunctions/__pycache__/

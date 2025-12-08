@@ -1,25 +1,20 @@
-# User
+# User Management System
 
-A small but growing login system project written in **Python 3**, now updated with both **CLI** and **GUI** versions for different user experiences.  
-Originally made as a **challenge idea from my friend [kwphil](https://github.com/kwphil)**.
+A growing login system written in **Python 3**, now featuring both a **CLI app** and a **Tkinter GUI app**, an expanding admin panel, improved verification logic, and a persistent SQLite database for storing users.
 
-This project lets you:
-- Sign up with a username and password  
-- Log in securely using stored credentials  
-- Save and verify user data from a local database (`data.db`)  
-- Convert text to hashed values using bcrypt  
-- Choose between a command-line or graphical interface for login management  
+This began as a challenge idea from my friend **kwphil**, and has developed into a modular, expandable authentication system with real password hashing and data management.
 
 ---
 
 ## 🧩 Requirements
 
-- **Python 3** (any recent version works)
-- The **bcrypt** library for password hashing
-- The **sqlite3** module (included with Python)
-- **tkinter** (comes with most Python installations, used for the GUI)
+- **Python 3**
+- **bcrypt** for password hashing  
+- **sqlite3** (bundled with Python)
+- **tkinter** for the GUI (bundled on most systems)
 
-Install bcrypt if needed:
+Install bcrypt if you don’t have it already:
+
 ```bash
 pip install bcrypt
 ```
@@ -28,87 +23,125 @@ pip install bcrypt
 
 ## ⚙️ How to Run
 
-1. Download or clone this repository:
-   ```bash
-   git clone https://github.com/zachariahstauffer/user.git
-   cd user
-   ```
+Clone or download the project:
 
-2. Run the **CLI version**:
-   ```bash
-   python3 CliApp.py
-   ```
-
-3. Or, launch the **GUI version**:
-   ```bash
-   python3 GuiApp.py
-   ```
-
----
-
-## 🪄 How to Use
-
-Both versions let you sign up, log in, and manage user data — the only difference is how you interact with them.
-
-### Command-Line Example (Main.py)
-```
-sign-up or login: sign-up
-Make Username: zach
-Make Password: Mypassword!1
-User created successfully!
-
-sign-up or login: login
-Username: zach
-Password: mypassword
-user found, checking password...
-zach has logged in
+```bash
+git clone https://github.com/zachariahstauffer/user.git
+cd user
 ```
 
-### Graphical Example (App.py)
-A small window appears with buttons and text boxes for creating or logging into an account.  
-You can enter your username and password, click “Sign Up” or “Login,” and see the results directly in the GUI.
+Run the **CLI version**:
+
+```bash
+python3 CliApp.py
+```
+
+Or open the **GUI version**:
+
+```bash
+python3 GuiApp.py
+```
+
+Both use the same backend logic stored in the `CoreFunctions` folder.
 
 ---
 
-## 🧠 File Overview
+## 🪄 Features
 
-- **Main.py** → Command-Line Interface (CLI) version of the program.  
-- **App.py** → Graphical User Interface (GUI) version using tkinter.  
-- **User.py** → Defines the User class and manages account data.  
-- **Data.py** → Handles reading, writing, and managing stored data in `data.db`.  
-- **Verify.py** → Contains verification logic for user credentials.  
-- **Txt_to_hash.py** → Utility for converting plain text to bcrypt hashes.  
-- **data.db** → Local SQLite database that stores usernames and hashed passwords.  
-- **.gitignore** → Keeps unnecessary files out of version control.
+### ✅ Sign-Up System
+- Creates a new account with a username + password  
+- Passwords are hashed using bcrypt  
+- Detailed password requirements (uppercase, lowercase, number, special character, no spaces, length limits)
+
+### ✅ Login System
+- Checks stored hashed passwords  
+- Loads user data from `data.db`  
+- Returns a `User` object representing the session  
+- Distinguishes between *normal users* and *admin* (admin = user with ID 0)
+
+### ✅ Admin Features
+Admins (ID = 0) unlock extra options:
+
+- Delete any user  
+- List all users in the database  
+- Wipe all users except admin  
+- Eventually expandable for more controls
+
+### ✅ User Features
+Regular users can:
+
+- Change their password  
+- Delete their account  
+- Log out
+
+These options appear automatically based on the user’s ID.
+
+### ✅ GUI Version (Tkinter)
+- Clean layout with sign-up and login pages  
+- Text fields for username and password  
+- Displays verification messages inside the window  
+- Same backend logic used by the CLI version
+
+### ✅ Database System
+Uses SQLite (`data.db`) with a simple table:
+
+```
+id | username | password_hash
+```
+
+Handles:
+- Saving new users  
+- Checking existing usernames  
+- Loading specific users  
+- Listing all users  
+- Deleting users  
+- Wiping non-admin accounts
 
 ---
 
-## 💾 How It Works (Simplified Explanation)
+## 🧠 How It Works (Simplified)
 
-- Usernames and hashed passwords are stored securely inside an SQLite database (`data.db`).  
-- Passwords are hashed using **bcrypt**, which prevents direct recovery of the original password.  
-- During login, the entered password is hashed again and compared to the saved hash.  
-- If the hashes match — access granted; if not — access denied.  
-- Both the CLI and GUI versions rely on the same backend modules for logic and data handling.
+1. When a user signs up, their password gets hashed with bcrypt.  
+2. The system stores the username and the hash in `data.db`.  
+3. When logging in, the password entered is hashed again and compared to the stored hash.  
+4. If it matches, access is granted and a `User` object is created to represent the logged-in account.  
+5. The CLI and GUI both rely on the same core modules:
+   - `Data.py`
+   - `Verify.py`
+   - `Login.py`
+   - `SignUp.py`
+   - `User.py`
+   - `AdminSettings.py`
 
 ---
 
-## 🧰 Features
+## 📦 Project Structure
 
-- Secure password handling using bcrypt  
-- Modular design separating logic, data, and interface  
-- Both GUI and CLI options for flexibility  
-- Local SQLite database persistence  
-- Text-to-hash converter utility  
+```
+CoreFunctions/
+    Data.py
+    Verify.py
+    Login.py
+    SignUp.py
+    AdminSettings.py
+    User.py
+
+CliApp.py
+GuiApp.py
+README.md
+data.db (auto-created)
+```
 
 ---
 
 ## 🚧 Planned Improvements
 
-- Add password reset functionality  
-- Enhanced GUI layout and visuals  
-- Better error handling and exception reporting  
-- Logging system for admin use  
+- Cleaner GUI layout  
+- Improved error messages  
+- Password change through GUI  
+- Admin options inside the GUI  
+- Logging system and event history  
+- Stronger verification for existing usernames  
 
 ---
 
@@ -121,5 +154,6 @@ You can enter your username and password, click “Sign Up” or “Login,” an
 
 ## 📜 License
 
-This project is open-source.  
-You’re free to use, modify, or share it with credit to the original authors.
+Open-source.  
+Use, modify, or expand it with credit to the original author.
+
