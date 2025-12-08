@@ -1,5 +1,6 @@
-fastapi
+fastapi[standard]
 uvicorn
 bcrypt
 jinja2
 python-multipart
+starlette[full]
