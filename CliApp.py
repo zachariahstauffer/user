@@ -1,3 +1,4 @@
+from getpass import getpass
 from CoreFunctions import SignUpClass, LoginClass, AdminSettingsClass
 
 class CliApp:
@@ -21,11 +22,11 @@ class CliApp:
 
     def sign_up_prompt(self):
         username = str(input('Make a username: '))
-        password = str(input('Make a password: '))
+        password = str(getpass('Make a password: '))
 
-        val, messages = self.sign_up.sign_up(username, password)
+        messages, passed = self.sign_up.sign_up(username, password)
 
-        if not val:
+        if not passed:
             self.message_handler(messages)
             self.sign_up_prompt()
             print()
@@ -40,10 +41,12 @@ class CliApp:
             print()
             self.login_prompt()
             return
+        
         elif choice in ('back', 'b'):
             print()
             self.run()
             return
+        
         elif choice in ('exit', 'e'):
             exit()
 

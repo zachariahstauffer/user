@@ -6,21 +6,23 @@ class VerifyClass:
         self.data = DataClass()
 
     def verify_sign_up(self, username, password):
-        val = True
-        user_exists = False
-        list_of_flags = []
+        passed = True
+        passed_username = True
+        passed_password = True
+        username_messages = []
+        password_messages = []
+        messages = []
 
+        username_messages, passed_username  = self.verify_username(username)
+        password_messages, passed_password = self.verify_password(password)
 
-        user_exists = self.data.check_for_existing_user(username)
-
-        val, list_of_flags = self.verify_password(password)
-
-        if user_exists:
-                    list_of_flags.insert(0, 'user already exists')
-                    val = False
-
-        return val, list_of_flags
+        if not passed_username or not passed_password:
+            passed = False
+            messages = username_messages + password_messages
+            return messages, passed
         
+        return messages, passed
+
     def verify_login(self, password, hashed):
         password = password.encode('utf-8')
         
@@ -31,66 +33,94 @@ class VerifyClass:
             return True, True
         
         return True, False
-            
-    def requirements(self, char, has_upper, has_lower, has_special, has_number, has_space):
-            special = {'!' , '@', "#", '$', '%', '^', '&'}
+    
+    def verify_username(self, username):
+        has_space = has_special = False
+        special = {'!' , '@', "#", '$', '%', '^', '&'}
+        messages = []
+        user_exists = False
+        passed = True
 
-            if 20 != ord(char):
+        user_exists = self.data.check_for_existing_user(username)
+
+        if user_exists:
+            messages.append(f"{username} already exists")
+            passed = False
+
+        for char in username:
+            if ord(' ') == ord(char):
                 has_space = True
-
-            if 48 <= ord(char) <= 57:
-                has_number = True
-                
-            if 65 <= ord(char) <= 90:
-                has_upper = True
-
-            if 97 <= ord(char) <= 122:
-                has_lower = True
 
             if char in special:
                 has_special = True
 
-            return has_upper, has_lower, has_special, has_number, has_space
+        if has_space:
+            messages.append('Cannot contain spaces')
+            passed = False
+
+        if has_special:
+            messages.append('Connot contain scpecial characters (!, @, #, $, %, ^, &)')
+            passed = False
+
+        return messages, passed
 
     def verify_password(self, password):
-        val = True
-        list_of_flags = []
+
+        passed = True
+        messages = []
 
         has_upper = has_lower = has_special = has_number = has_space = False
 
         if len(password) < 6:
-            list_of_flags.append('password must be 6 characters long')
-            val = False
+            messages.append('password must be 6 characters long')
+            passed = False
 
         if len(password) > 20:
-            list_of_flags.append('password can not be more than 20 characters long')
-            val = False
+            messages.append('password can not be more than 20 characters long')
+            passed = False
         
         for char in password:
             has_upper, has_lower, has_special, has_number, has_space = self.requirements(char, has_upper, has_lower, has_special, has_number, has_space)
         
         if not has_upper:
-            list_of_flags.append('password must contain at least one uppercase letter')
-            val = False
+            messages.append('password must contain at least one uppercase letter')
+            passed = False
 
         if not has_lower:
-            list_of_flags.append('password must contain at least one lowercase letter')
-            val = False
+            messages.append('password must contain at least one lowercase letter')
+            passed = False
 
         if not has_number:
-            list_of_flags.append('password must contain at least one number')
-            val = False
+            messages.append('password must contain at least one number')
+            passed = False
 
         if not has_special:
-            list_of_flags.append("password must contain at least one special character (!, @, #, $, %, ^, &)")
-            val = False
+            messages.append("password must contain at least one special character (!, @, #, $, %, ^, &)")
+            passed = False
 
-        if not has_space:
-            list_of_flags.append('cannot contain spaces')
-            val = False
-
-        if list_of_flags:
-            return val, list_of_flags
+        if has_space:
+            messages.append('password cannot contain spaces')
+            passed = False
 
 
-        return val, list_of_flags
+        return messages, passed
+
+    def requirements(self, char, has_upper, has_lower, has_special, has_number, has_space):
+        special = {'!' , '@', "#", '$', '%', '^', '&'}
+
+        if ord(' ') == ord(char):
+            has_space = True
+
+        if 48 <= ord(char) <= 57:
+            has_number = True
+            
+        if 65 <= ord(char) <= 90:
+            has_upper = True
+
+        if 97 <= ord(char) <= 122:
+            has_lower = True
+
+        if char in special:
+            has_special = True
+
+        return has_upper, has_lower, has_special, has_number, has_space

@@ -50,15 +50,15 @@ def submitsignup(request: Request, username = Form(), password = Form()):
 
     print(f'{username} and {password}')
 
-    val, flags = signupc.sign_up(username, password)
+    messages, passed = signupc.sign_up(username, password)
 
-    if not val:
-        for i in flags:
+    if not passed:
+        for i in messages:
             print(i)
-        return templates.TemplateResponse(request=request, name="SignUp.html", context={"success": val, "messages": flags})
+        return templates.TemplateResponse(request=request, name="SignUp.html", context={"success": passed, "messages": messages})
 
     print(f'{username} has signed up')
-    return templates.TemplateResponse(request=request, name="SignUp.html", context={"success": val, "messages": flags})
+    return templates.TemplateResponse(request=request, name="SignUp.html", context={"success": passed, "messages": messages})
 
 @app.post("/login", response_class=HTMLResponse)
 def submitlogin(request: Request, username = Form(), password = Form()):
@@ -102,9 +102,9 @@ def change_password(request: Request, password = Form(), confirm = Form()):
         return RedirectResponse(url="/login", status_code=303)
     
     if password == confirm:
-        val, messages = user.change_password(password)
+        passed, messages = user.change_password(password)
         request.session["messages"] = messages
-        request.session["succeed"] = val
+        request.session["succeed"] = passed
         return RedirectResponse(url='/usersettings', status_code=303)
 
 
@@ -115,8 +115,13 @@ def change_password(request: Request, password = Form(), confirm = Form()):
     request.session["succeed"] = False
     return RedirectResponse(url='/usersettings', status_code=303)
 
+@app.post("/promote-demote")
+def promote_demote(request: Request, id = Form()):
+    pass
 
-
+@app.post("/wipe")
+def wipe(request: Request):
+    data.wipe()
 
 def make_user_object(request: Request):
     username = request.session.get("username")

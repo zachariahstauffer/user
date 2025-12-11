@@ -5,21 +5,17 @@ import bcrypt
 class SignUpClass:
     def __init__(self):
         self.data = DataClass()
+        self.verify = VerifyClass()
     
     def sign_up(self,  username, password):
-        
+        messages, passed = self.verify.verify_sign_up(username, password)
 
-        val, messages = VerifyClass().verify_sign_up(username, password)
-
-        if not val:
-            return val, messages
+        if not passed:
+            return messages, passed
         
-        hashed_password = self.text_to_hash(password)
-        
-        self.data.save(username, hashed_password)
-        messages.append('Sign up successfull')
-        return val, messages
-    
+        password_hashed = self.text_to_hash(password)
+        self.data.save(username, password_hashed)
+        return messages, passed
 
     def text_to_hash(self, password):
         password = password.encode('utf-8')

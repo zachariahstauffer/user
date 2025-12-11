@@ -4,8 +4,8 @@ class AdminSettingsClass:
     def __init__(self):
         self.data = DataClass()
 
-    def promote_user_demote_admin(self, user):
-        id, admin, _ = self.data.load(user)
+    def promote_user_demote_admin(self, username):
+        id, admin, _ = self.data.load(username)
 
         if not admin:
             self.data.change_admin_status(id, True)
@@ -56,4 +56,3 @@ class AdminSettingsClass:
                 user_count += 1
 
         return total_users, admin_count, user_count
-            

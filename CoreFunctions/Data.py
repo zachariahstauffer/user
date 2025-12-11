@@ -13,7 +13,7 @@ class DataClass:
                 CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY,
                 admin BOOLEAN,
-                username TEXT,
+                username TEXT UNIQUE,
                 password_hash BLOB)
                 """)
             con.commit()
