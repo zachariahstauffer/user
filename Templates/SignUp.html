@@ -2,15 +2,16 @@
 <html lang="en">
     <head>
         <link rel="stylesheet" href="/static/css/style.css">
+        <script src="/static/js/style.js"></script>
         <title>SignUp</title>
     </head>
     <body>
         
         {% if messages %}
             {% if success %}
-            <div class="alert alert-success">
+                <div class="alert alert-success">
             {% else %}
-            <div class="alert alert-danger">
+                <div class="alert alert-danger">
             {% endif %}
 
             {% for message in messages %}
@@ -25,6 +26,7 @@
                 <input type="text" id="username" name="username", autocomplete="off"><br>
                 <label for="password">Password: </label><br>
                 <input type="password" id="password" name="password" autocomplete="off"><br><br>
+                <input type="checkbox" name="show_password" onclick="toggle_password()">show password <br><br>
                 <input type="submit" value="submit" class="btn btn-submit">
             </form>
         </div>

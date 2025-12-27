@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <link rel="stylesheet" href="/static/css/style.css">
+        <script src="/static/js/style.js" defer></script>
         <title>login</title>
     </head>
 
@@ -25,6 +26,7 @@
                 <input type="text" id="username" name="username", autocomplete="off"><br>
                 <label for="password">Password: </label><br>
                 <input type="password" id="password" name="password" autocomplete="off"><br><br>
+                <input type="checkbox" name="show_password" onclick="toggle_password()">show password <br><br>
                 <input type="submit" value="submit" class="btn btn-submit">
             </form>
         </div>

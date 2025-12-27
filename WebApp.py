@@ -14,7 +14,6 @@ templates = Jinja2Templates(directory="Templates")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.add_middleware(SessionMiddleware, secret_key="foot")
 
-
 signupc = SignUpClass()
 loginc = LoginClass()
 adminsettings = AdminSettingsClass()
@@ -27,11 +26,16 @@ def homepage(request: Request):
 
 @app.get("/signup", response_class=HTMLResponse)
 def signup(request: Request):
-    return templates.TemplateResponse(request=request, name="SignUp.html", context={"content": "This is Page 1."})
+    messages = request.session.get("messages")
+    succeed = request.session.get("succeed")
+    request.session.clear()
+    return templates.TemplateResponse(request=request, name="SignUp.html", context={"messages": messages, "success": succeed})
 
 @app.get("/login", response_class=HTMLResponse)
 def login(request: Request):
-    return templates.TemplateResponse(request=request, name="Login.html")
+    messages = request.session.get("messages")
+    succeed = request.session.get("succeed")
+    return templates.TemplateResponse(request=request, name="Login.html", context={"messages": messages, "succeed": succeed})
 
 @app.get("/usersettings", response_class=HTMLResponse)
 def usersettings(request: Request):
@@ -45,7 +49,7 @@ def logout(request: Request):
     request.session.clear()
     return RedirectResponse(url="/")
 
-@app.post("/signup", response_class=HTMLResponse)
+@app.post("/signup")
 def submitsignup(request: Request, username = Form(), password = Form()):
 
     print(f'{username} and {password}')
@@ -55,12 +59,17 @@ def submitsignup(request: Request, username = Form(), password = Form()):
     if not passed:
         for i in messages:
             print(i)
-        return templates.TemplateResponse(request=request, name="SignUp.html", context={"success": passed, "messages": messages})
-
+        request.session["messages"] = messages
+        request.session["succeed"] = passed
+        return RedirectResponse(url="/signup", status_code=303)
+    
+    request.session["messages"] = messages
+    request.session["succeed"] = passed
+    
     print(f'{username} has signed up')
-    return templates.TemplateResponse(request=request, name="SignUp.html", context={"success": passed, "messages": messages})
+    return RedirectResponse(url="/signup", status_code=303)
 
-@app.post("/login", response_class=HTMLResponse)
+@app.post("/login")
 def submitlogin(request: Request, username = Form(), password = Form()):
 
     print(f'{username} and {password}')
@@ -68,20 +77,21 @@ def submitlogin(request: Request, username = Form(), password = Form()):
     messages, passed, _ = loginc.login(username, password)
 
     if not passed:
-        return templates.TemplateResponse(request=request, name="Login.html", context={'messages': messages, "success": passed})
+        request.session["messages": messages]
+        request.session["passed": passed]
+        return RedirectResponse(url="/login", status_code=303)
 
 
-    request.session['username'] = username
     return RedirectResponse(url="/usersettings", status_code=303)
 
 @app.post("/deleteuser")
 def deleteuser(request: Request):
 
+    request.session.clear()
+
     username = request.session.get("username")
 
     id, admin, _ = data.load(username)
-
-
 
     user = make_user_object(request=request)
 
