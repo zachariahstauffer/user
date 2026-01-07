@@ -1,38 +1,78 @@
 <!DOCTYPE html>
+
 <html lang="en">
     <head>
         <link rel="stylesheet" href="/static/css/style.css">
-        <script src="/static/js/style.js"></script>
+        <script src="/static/js/password_requirements.js"></script>
+
+        <script src="/static/js/style.js" defer></script>
+
         <title>SignUp</title>
+
     </head>
+
+
     <body>
         
+
+
         {% if messages %}
+
             {% if success %}
+
                 <div class="alert alert-success">
+
             {% else %}
+
                 <div class="alert alert-danger">
+
             {% endif %}
 
             {% for message in messages %}
+
                 <p class="message">{{ message }}</p>
+
             {% endfor %}
+
             </div>
+
         {% endif %}
 
         <div class="form-container signup">
             <form action="/signup" method="post">
+
                 <label for="username">Username: </label><br>
-                <input type="text" id="username" name="username", autocomplete="off"><br>
+                <input type="text" id="username" name="username" autocomplete="off" placeholder="eg: User123"><br>
+
                 <label for="password">Password: </label><br>
-                <input type="password" id="password" name="password" autocomplete="off"><br><br>
+                <input type="password" id="password" name="password" autocomplete="off" placeholder="eg: Password!1"><br><br>
+
                 <input type="checkbox" name="show_password" onclick="toggle_password()">show password <br><br>
+
                 <input type="submit" value="submit" class="btn btn-submit">
+
             </form>
+
+        </div>
+
+
+        <div class="password_requirements" id="password_requirements">
+            <h3>Pasword must contain the following:</h3>
+
+            <ul>
+                <li id="length" class="invalid">Minimum 6 characters</li>
+                <li id="special" class="invalid">At least one special (!, @, #, $, %, ^, &)</li>
+                <li id="number" class="invalid">At least one number</li>
+                <li id="lower" class="invalid">At least one lowercase letter</li>
+                <li id="upper" class="invalid">At least one UpperCase letter</li>
+            </ul>
+
         </div>
 
         <div class="back">
+
             <a href="/" class="btn btn-back">Back to home</a>
+
         </div>
     </body>
 </html>

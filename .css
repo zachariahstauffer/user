@@ -1,0 +1,122 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: purple 1px solid;
+    padding: 5px
+}
+
+body{
+    color: white;
+    background-color: #121212;
+}
+
+
+.form-container{
+    max-width: 400px;
+    margin: 50px auto;
+    max-height: 400px;
+    padding: 20px;
+    background-color: gray;
+    border: 1px solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stack-verticaly{
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 50px auto;
+    width: 100%;
+}
+
+.alert {
+    max-width: 390px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.btn{
+    display: inline-block;
+    padding: 5px 10px;
+    background: #155724;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-back { 
+    background: #6c757d;
+}
+
+.alert-success{
+    background: #d4edda;
+    color: #155724;
+}
+
+.btn-submit{
+    background-color: #007bff;
+}
+
+.alert-danger {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.password_requirements {
+    max-width: 400px;
+    max-height: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: grey;
+    border: 1px solid;
+    border-radius: 5px;
+    display: none;
+}
+
+.invalid {
+    color: red;
+    padding-left: 20px;
+
+}
+
+.invalid::before{
+    position: relative;
+    left: -35px;
+    content: '\1D54F'
+}
+
+.valid{
+    color: green;
+    padding-left: 20px;
+}
+
+.valid::before {
+    position: relative;
+    left: -35px;
+    content: "\2705";
+}
+
+.grid-container{
+    display: grid;
+    grid-template-columns: 1fr repeat(3, auto);
+    grid-template-rows: repeat(10, auto);
+    gap: auto;
+    max-width: 10rem;
+}
+
+
+.options-button-container{
+    grid-column: 4;
+    grid-row: 1;
+}
+
+.user-options{
+    display: block;
+    grid-column: 4;
+    grid-row: 2;
+}
