@@ -1,82 +1,107 @@
-# User Management System
+# Message App
+
+(Name is work in progress)
+
+---
+
+## Features
 
 A growing login system written in **Python 3**, now featuring a **FastAPI web app**, a **CLI app**, and a dedicated **developer maintenance script** for managing users manually.  
-The system includes an admin panel, expanded verification logic, templated HTML pages, and a persistent SQLite database for secure user storage.
+The system includes an admin panel, expanded verification logic, and a persistent **SQLite** database for user information
+
+This app also features a minimal frontend website (Hosted at 127.0.0.1:8000), soon to be available
 
 This began as a challenge idea from my friend **kwphil**, and has developed into a modular, expandable authentication framework with password hashing, session handling, and both browser and console interfaces.
 
 ---
 
-## 🧩 Requirements
+## Requirements
 
-Install all dependencies with:
+The requirements are fairly minimal, only requiring:
+
+- `Python3`
+- `Pip3`
+
+And to view requires a browser of your choice!
+
+Install all python dependencies with:
 
     pip install -r requirements.txt
 
 ---
 
-## create a virtual evironment(requried on some os)
+## create a virtual evironment (if required)
 
     python -m venv .venv
 
 ---
 
-## ⚙️ How to Run
+## How to Run
 
-Clone or download the project:
+### Clone the repo:
 
-    git clone [https://github.com/zachariahstauffer/user.git](https://github.com/zachariahstauffer/user.git)
-    cd user
+```sh
+git clone [https://github.com/zachariahstauffer/user.git](https://github.com/zachariahstauffer/user.git)
+cd user
+```
 
-### 🖥️ Web Version (FastAPI)
+### Include Website
 
 Run the web app:
 
-    python3 WebApp.py
+```sh
+python3 WebApp.py
+```
 
 Then open your browser at:
 
-    http://localhost:8000
+```sh
+http://localhost:8000
+```
 
 You’ll see a homepage with **Login** and **Sign Up** buttons.  
 The system automatically starts a local Uvicorn server and manages user sessions.
 
-### 💻 CLI Version
+### Minimal CLI
 
 If you prefer console use:
 
-    python3 CliApp.py
+```sh
+python3 CliApp.py
+```
 
 Both the web and CLI versions share the same authentication backend inside the `CoreFunctions` folder.
 
-### 🧰 Developer Management Script
+### Developer Management Script
 
 A standalone developer-only utility is available for advanced database operations:
 
-    python3 Manage_users.py list
-    python3 Manage_users.py wipe
-    python3 Manage_users.py create-admin
+```
+python3 Manage_users.py list
+python3 Manage_users.py wipe
+python3 Manage_users.py create-admin
+```
 
-⚠️ **Use this only for development and maintenance.**  
+**WARNING: Use this only for development and maintenance.**  
 This tool directly modifies the SQLite database and bypasses normal verification logic.
 
 ---
 
-## 🪄 Features
+## Features
 
-### ✅ Sign-Up System
+### Sign-Up System
 - Register a new username and password  
 - Passwords are hashed using bcrypt  
 - Strong password requirements enforced (uppercase, lowercase, number, special symbol, no spaces, and length limits)  
 - Immediate feedback through both CLI and browser interface
 
-### ✅ Login System
+### Login System
 - Authenticates using the hashed password from `data.db`  
 - Returns a persistent user session (via FastAPI or Python objects)  
 - Creates a `User` instance representing the active login  
 - Handles incorrect logins gracefully with alert messages
 
-### ✅ Admin Features
+### Admin Features
 Admins unlock additional tools:
 - Promote/demote accounts  
 - Delete any user  
@@ -84,14 +109,14 @@ Admins unlock additional tools:
 - View active user statistics  
 - Fully accessible through both CLI and core logic
 
-### ✅ User Features
+### User Features
 Regular users can:
 - Change their password  
 - Delete their account  
 - Log out  
 Web users can do all of this from the **User Settings** page.
 
-### ✅ Web Interface (FastAPI)
+### Web Interface (FastAPI)
 - Clean HTML frontend using **Jinja2** templates  
 - Uses `SessionMiddleware` for secure login persistence  
 - Dynamic feedback messages for actions  
@@ -102,7 +127,7 @@ Web users can do all of this from the **User Settings** page.
   - `UserSettings.html`
 - Styled via `/static/css/style.css` for consistent dark theme and alert formatting
 
-### ✅ Database System
+### Database System
 Uses SQLite (`data.db`) with a single user table schema:
 
     id | admin | username | password_hash
@@ -115,7 +140,7 @@ Includes:
 
 ---
 
-## 🧠 How It Works (Simplified)
+## Simple Rundown
 
 1. The user signs up—passwords are validated for strength and hashed with bcrypt.  
 2. The system stores the hash and other details in `data.db`.  
@@ -133,7 +158,7 @@ The `Manage_users.py` file extends this foundation for developer-only database i
 
 ---
 
-## 📦 Project Structure
+## Project Structure
 
     CoreFunctions/
         Data.py
@@ -161,7 +186,7 @@ The `Manage_users.py` file extends this foundation for developer-only database i
 
 ---
 
-## 🚧 Planned Improvements
+## Planned Improvements
 
 - Admin control panel accessible through the web  
 - Enhanced web visuals and template structure  
@@ -172,14 +197,15 @@ The `Manage_users.py` file extends this foundation for developer-only database i
 
 ---
 
-## 👥 Credits
+## Credits
 
 - **Developer:** zachariahstauffer  
 - **Challenge idea:** [**kwphil**](https://github.com/kwphil)
 
 ---
 
-## 📜 License
+## License
 
 Open-source.  
 Use, modify, or expand it with credit to the original author.
+
