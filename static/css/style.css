@@ -108,20 +108,24 @@ footer{
 }
 
 #sidebar.collapsed {
-    width: 100px;
+    width: 75px;
 }
 
-#sidebar.collapsed > ul > *:not(#toggle-sidebar-container) {
+#sidebar.collapsed > ul > li > * {
     display: none;
 }
 
-#sidebar.collapsed {
-    width: 100px;
-    padding: 5px 0.5em;
+#sidebar.collapsed #sidebar-toggle {
+    display: block;
 }
 
 #sidebar.collapsed ul {
     padding: 0.5em;
+}
+
+#sidebar.collapsed li {
+    padding: 0;
+    width: 25px;
 }
 
 #dropdown-btn{
