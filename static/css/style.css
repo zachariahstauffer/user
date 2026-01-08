@@ -140,3 +140,7 @@ footer{
 #dropdown-btn-container{
     padding-top: 0.5em;
 }
+
+#sidebar-dropdown-hide.collapsed {
+    display: none;
+}

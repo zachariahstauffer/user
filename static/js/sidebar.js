@@ -25,8 +25,15 @@ async function sidebar_functions() {
     let sidebar_toggle = document.getElementById('toggle-sidebar-container');
     let sidebar = document.getElementById('sidebar');
 
+    let dropdown = document.getElementById('dropdown-btn-container');
+    let dropdown_hide = document.getElementById('sidebar-dropdown-hide')
+
     sidebar_toggle.addEventListener('click', (_) => {
         sidebar.classList.toggle('collapsed');
+    });
+
+    dropdown.addEventListener('click', (_) => {
+        dropdown_hide.classList.toggle('collapsed');
     });
 }
 
