@@ -6,8 +6,12 @@ from starlette.middleware.sessions import SessionMiddleware
 
 import uvicorn
 
-
 from CoreFunctions import SignUpClass, LoginClass, UserClass, AdminSettingsClass, DataClass
+
+# I left a couple of notes here for you
+# I noticed that you left AdminSettings.html unused as well, 
+# but I would recommend having a specific key to access it, 
+# as well as the admin functions.
 
 app = FastAPI()
 templates = Jinja2Templates(directory="Templates")
@@ -19,6 +23,10 @@ loginc = LoginClass()
 adminsettings = AdminSettingsClass()
 data = DataClass()
 
+@app.get("/sidebar", response_class=HTMLResponse)
+def sidebar(request: Request):
+    print("sidebar")
+    return templates.TemplateResponse(request=request, name="Sidebar.html")
 
 @app.get("/", response_class=HTMLResponse)
 def homepage(request: Request):
@@ -143,13 +151,17 @@ def change_password(request: Request, password = Form(), confirm = Form()):
 def promote_demote(request: Request, id = Form()):
     pass
 
+# Scary!!!
+# Anybody could use the method if they wanted.
+# Maybe ask for a key hash or password?
+# curl -X POST <url|(ip:port)>/wipe would be all it takes
 @app.post("/wipe")
 def wipe(request: Request):
     data.wipe()
 
 def make_user_object(request: Request):
     username = request.session.get("username")
-    id, admin, _,  =data.load(username)
+    id, admin, _, = data.load(username)
 
     if username is None or admin is None:
         return None
