@@ -1,0 +1,16 @@
+
+
+.post {
+    border-bottom: 1px solid #eee;
+    padding: 1rem;
+}
+
+.username {
+    font-weight: 600;
+}
+
+.timestamp {
+    color: #888;
+    font-size: 0.9em;
+}
+

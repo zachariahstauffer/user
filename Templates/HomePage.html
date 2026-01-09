@@ -1,20 +1,52 @@
 <!DOCTYPE html>
+
+<!-- 3 steps -->
+<!-- Lock the layout -->
+<!-- Design the post component -->
+<!-- Make the feed scrollable -->
 <html>
     <head>
         <link rel="stylesheet" href="/static/css/style.css">
-        <script src="/static/js/style.js"></script>
+	    <link rel="stylesheet" href="/static/css/home.css">
+	    <script src="/static/js/style.js"></script>
 
         <title>Home Page</title>
     </head>
     <body>
         <nav id="sidebar"></nav>
         <main>
-            <h1>HOME</h1>
-        </main>
 
+        <main>
+            <section class="composer-container">
+                <textarea id="composer" placeholder="What’s happening?" maxlength="280"></textarea>
+
+                <div class="composer-actions">
+                    <span id="char-count">280</span>
+                    <button>Post</button>
+                </div>
+            </section>
+        
+            <section class="feed">
+                <article class="post">
+                    <header>
+                        <span class="username">@alice</span>
+                        <span class="timestamp">· 2m</span>
+                    </header>
+                    <p>
+                        This is a placeholder post. Chronological. No algorithm.
+                    </p>
+                    <div class="post-actions">
+                        <button>Reply</button>
+                        <button>Repost</button>
+                        <button>Like</button>
+                    </div>
+                </article>
+            </section>
+        </main>
         <footer>
             Footer
         </footer>     
     </body>
     <script src="/static/js/sidebar.js"></script>
+    <script src="/static/js/compose.js"></script>
 </html>

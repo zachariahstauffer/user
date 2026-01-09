@@ -8,41 +8,45 @@
     </head>
 
     <body>
-
-        {% if messages %}
-
-
-            <div class="alert alert-danger">
-
-            <p>{{ message }}</p>
-
+        <nav id="sidebar"></nav>
+        <main>
+    
+            {% if messages %}
+    
+    
+                <div class="alert alert-danger">
+    
+                <p>{{ message }}</p>
+    
+                </div>
+    
+            {% endif %}
+    
+            
+            <div class="form-container login">
+    
+                <form action="/login" method="post">
+                    
+                    <label for="username">Username: </label><br>
+                    <input type="text" id="username" name="username" value= "{{ username }}" autocomplete="off"><br>
+    
+                    <label for="password">Password: </label><br>
+                    <input type="password" id="password" name="password" autocomplete="off"><br><br>
+    
+                    <input type="checkbox" name="show_password" onclick="toggle_password()">show password <br><br>
+    
+                    <input type="submit" value="submit" class="btn btn-submit">
+    
+                </form>
+    
             </div>
-
-        {% endif %}
-
-        
-        <div class="form-container login">
-
-            <form action="/login" method="post">
-                
-                <label for="username">Username: </label><br>
-                <input type="text" id="username" name="username" value= "{{ username }}" autocomplete="off"><br>
-
-                <label for="password">Password: </label><br>
-                <input type="password" id="password" name="password" autocomplete="off"><br><br>
-
-                <input type="checkbox" name="show_password" onclick="toggle_password()">show password <br><br>
-
-                <input type="submit" value="submit" class="btn btn-submit">
-
-            </form>
-
-        </div>
-
-        <div class="back">
-
-            <a href="/" class="btn btn-back">Back to home</a>
-
-        </div>
+    
+            <div class="back">
+    
+                <a href="/" class="btn btn-back">Back to home</a>
+    
+            </div>
+        </main>
     </body>
+    <script src="/static/js/sidebar.js"></script>
 </html>

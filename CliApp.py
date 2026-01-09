@@ -1,6 +1,8 @@
 from getpass import getpass
 from CoreFunctions import SignUpClass, LoginClass, AdminSettingsClass
 
+# Are you still using this? We could probably delete it soon
+
 class CliApp:
     def __init__(self):
         self.sign_up = SignUpClass()

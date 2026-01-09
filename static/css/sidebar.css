@@ -1,0 +1,99 @@
+#sidebar{
+    box-sizing: border-box;
+    height: 100dvh;
+    width: 200px;
+    padding: 5px 1em;
+    background-color: var(--base-clr);
+    border-right: 1px solid var(--line-clr);
+}
+
+#sidebar ul{
+    list-style: none;
+    padding: 1em;
+}
+
+#sidebar > ul > li:first-child{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.2em;
+    cursor: pointer;
+    .logo{
+        font-weight:600;
+    }
+
+    .toggle-btn{
+        background: none;
+        border: none;
+    }
+}
+
+#sidebar ul li:active{
+    color: var(--accent-clr);
+
+    svg{
+        fill: var(--accent-clr);
+    }
+}
+
+#sidebar a, 
+#sidebar dropdown-btn, 
+#sidebar logo {
+    border-radius: .5em;
+    padding: 1em;
+
+    text-decoration: none;
+
+    color: var(--text-clr);
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+#sidebar a:hover, 
+#sidebar drop-btn:hover {
+    background-color: var(--hover-clr);
+    color: var(--accent-clr);
+
+    svg{
+        fill: var(--accent-clr);
+    }
+}
+
+#sidebar.collapsed {
+    width: 75px;
+}
+
+#sidebar.collapsed > ul > li > * {
+    display: none;
+}
+
+#sidebar.collapsed #sidebar-toggle {
+    display: block;
+}
+
+#sidebar.collapsed ul {
+    padding: 0.5em;
+}
+
+#sidebar.collapsed li {
+    padding: 0;
+    width: 25px;
+}
+
+#dropdown-btn{
+    background: none;
+    cursor: pointer;
+    border: none;
+    color: var(--text-clr);
+    display: flex;
+    align-items: center;
+}
+
+#dropdown-btn-container{
+    padding-top: 0.5em;
+}
+
+#sidebar-dropdown-hide.collapsed {
+    display: none;
+}
