@@ -34,10 +34,37 @@ footer{
     padding: 1em;
 }
 
+button {
+    background: none;
+    cursor: pointer;
+    border: none;
+    color: var(--text-clr);
+}
+
+a, 
+button {
+    border-radius: .5em;
+    padding: 1em;
+
+    text-decoration: none;
+
+    color: var(--text-clr);
+}
+
+a:hover, 
+button:hover {
+    background-color: var(--hover-clr);
+    color: var(--accent-clr);
+
+    svg{
+        fill: var(--accent-clr);
+    }
+}
+
 /* Debug */
-div,
+/* div,
 section,
 main {
     outline: solid purple;
 }
-
+ */

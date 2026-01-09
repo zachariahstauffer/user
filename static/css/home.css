@@ -1,5 +1,3 @@
-
-
 .post {
     border-bottom: 1px solid #eee;
     padding: 1rem;
@@ -14,3 +12,28 @@
     font-size: 0.9em;
 }
 
+.composer-container {
+    padding-bottom: 2rem;
+    border-bottom: thin solid white;
+}
+
+.composer-actions {
+    float: right;
+    padding-left: 10px;
+    border-bottom: thin solid white; 
+}
+
+#char-count {
+    padding-bottom: 1rem;
+}
+
+#composer {
+    resize: none;
+    background-color: var(--hover-clr);
+    color: var(--text-clr);
+    border-radius: 5px;
+}
+
+#composer::placeholder {
+    color: var(--secondary-text-clr)
+}
