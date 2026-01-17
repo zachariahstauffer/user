@@ -1,7 +1,7 @@
 function toggle_show_password() {
     let password_input = document.getElementById('password');
 
-    x.type = (x.type === 'password' ? 'text' : 'password');
+    password_input.type = (password_input.type === 'password' ? 'text' : 'password');
 }
 
 function toggle_useroptions() {
@@ -9,4 +9,3 @@ function toggle_useroptions() {
     
     options.style.display === 'none' ? 'block' : 'none';
 }
-

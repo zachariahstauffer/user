@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="/static/css/style.css">
 <link rel="stylesheet" href="/static/css/sidebar.css">
 <ul>
+
     <li id="toggle-sidebar-container">
         <span class="logo" id="logo">zbear</span>
         <svg 
@@ -33,12 +34,20 @@
             </svg>
         
         </button>
-        <ul id="sidebar-dropdown-hide">
-            <li>
+        <ul id="sidebar-dropdown-hide" class="collapsed">
+            <li id="sidebar_signup">
                 <a href="/signup">Sign Up</a>
             </li>
-            <li>
+            <li id="sidebar_login">
                 <a href="/login">Log In</a>
+            </li>
+
+            <li id='sidebar_profile' class="hidden">
+                <a href="/usersettings">profile</a>
+            </li>
+
+            <li id="sidebar_logout" class="hidden">
+                <a href="/logout">logout</a>
             </li>
         </ul>
     </li>
@@ -54,4 +63,17 @@
             <span>Home</span>
         </a>
     </li>
+
+    <li>
+        <a href="/messaging">
+            <svg
+            xmlns="http://www.w3.org/2000/svg" 
+            height="24px" viewBox="0 -960 960 960" width="24px" 
+            fill="#e3e3e3"
+            ><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-120H640q-30 38-71.5 59T480-240q-47 0-88.5-21T320-320H200v120Zm280-120q38 0 69-22t43-58h168v-360H200v360h168q12 36 43 58t69 22ZM200-200h560-560Z"/>
+            </svg>
+            <span>Message</span>
+        </a>
+    </li>
+
 </ul>

@@ -7,49 +7,57 @@
 
     <body>
 
-        {% if messages %}
-            {% if success %}
-                <div class="alert alert-success">
-            {% else %}
-                <div class="alert alert-danger">
+        <nav id="sidebar"></nav>
+
+
+        <main id="main">
+            {% if messages %}
+                {% if success %}
+                    <div class="alert alert-success">
+                {% else %}
+                    <div class="alert alert-danger">
+                {% endif %}
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+                    </div>
             {% endif %}
-            {% for message in messages %}
-                <p>{{ message }}</p>
-            {% endfor %}
+
+            <h1>Welcome {{user}}</h1>
+
+
+            <div class="usersettings">
+
+                <div class="logout">
+                    <form action="/logout" method="get">
+                        <button btn btn-logout>Logout</button><br><br>
+                    </form>
                 </div>
-        {% endif %}
 
-        <h1>Welcome {{user}}</h1>
+                <div class="delete_account">
+                    <form action="/deleteuser" method="post">
+                        <button type="submit" class="btn btn-submit">delete_Account</button>
+                    </form>
+                </div>
 
+                <div class="change_password form-container">
+                    <form action="/change_password" method="post" class="stack-verticaly">
+                        <label for="password">new password: </label><br>
+                        <input type="password" name="password" id="password"><br>
 
-        <div class="usersettings">
+                        <label for="confirm">Confirm Password: </label><br>
+                        <input type="password" name="confirm" id="confirm"><br>
 
-            <div class="logout">
-                <form action="/logout" method="get">
-                    <button btn btn-logout>Logout</button><br><br>
-                </form>
+                        <input type="submit" value="submit" class="btn btn-submit">
+                    </form>
+                </div>
             </div>
-            
 
-            <div class="delete_account">
-                <form action="/deleteuser" method="post">
-                    <button type="submit" class="btn btn-submit">delete_Account</button>
-                </form>
-            </div>
-
-            <div class="change_password form-container">
-                <form action="/change_password" method="post" class="stack-verticaly">
-                    <label for="password">new password: </label><br>
-                    <input type="password" name="password" id="password"><br>
-
-                    <label for="confirm">Confirm Password: </label><br>
-                    <input type="password" name="confirm" id="confirm"><br>
-
-                    <input type="submit" value="submit" class="btn btn-submit">
-                </form>
-            </div>
-        </div>
+        </main>
 
 
+        <footer id="footer"><h1>footer</h1></footer>
     </body>
+
+    <script src="/static/js/sidebar.js"></script>
 </html>

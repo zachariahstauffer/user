@@ -1,6 +1,8 @@
 import sqlite3
+from pymongo import MongoClient
+import datetime
 
-class DataClass:
+class SqliteClass:
     def __init__(self):
         self.create_table()
 
@@ -8,6 +10,8 @@ class DataClass:
         with sqlite3.connect('data.db') as con:
             cur = con.cursor()
             cur.execute('PRAGMA journal_mode = WAL')
+            cur.execute('PRAGMA synchronous = NORMAL')
+            cur.execute('PRAGMA busy_timeout = 5000')
 
             cur.execute("""
                 CREATE TABLE IF NOT EXISTS users (
@@ -101,3 +105,34 @@ class DataClass:
             cur = con.cursor()
             cur.execute("DELETE FROM users WHERE admin <> ?", (True,))
             con.commit()
+
+
+
+class MongoDBClass:
+    def __init__(self, connection="monbodb://localhost:"):
+        self.client = MongoClient(connection)
+        self.db = self.client['zbear']
+        self.posts = self.db['posts']
+
+    def store_post(self, author_id, content):
+            
+
+        doc = {
+            "author_id": author_id,
+            "content": content,
+            "timestamp": datetime.datetime.now(),
+        }
+
+        return str(self.posts.insert_one(doc).inserted_id)
+            
+
+    def get_post(self, message_id):
+        return self.posts.find_one({"_id": message_id})
+
+    def get_all_post(self, user_id, limit):
+        return list(self.posts.find({
+            "$or": [
+                {"author_id": user_id},
+                {"recipient_id": user_id}
+            ]
+        }).sort("timestamp", -1).limit(limit))

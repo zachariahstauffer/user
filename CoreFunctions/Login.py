@@ -1,11 +1,11 @@
 from .Verify import VerifyClass
-from .Data import DataClass
+from .DataManager import SqliteClass
 from .User import UserClass
 
 class LoginClass:
     def __init__(self):
         self.verify = VerifyClass()
-        self.data = DataClass()
+        self.data = SqliteClass()
 
     def login(self, username, password):
         message = []

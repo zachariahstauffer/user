@@ -1,12 +1,13 @@
 from fastapi import FastAPI, Form, Request
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse, Response
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware.sessions import SessionMiddleware
 
 import uvicorn
+import argparse
 
-from CoreFunctions import SignUpClass, LoginClass, UserClass, AdminSettingsClass, DataClass
+from CoreFunctions import SignUpClass, LoginClass, UserClass, AdminSettingsClass, SqliteClass
 
 # I left a couple of notes here for you
 # I noticed that you left AdminSettings.html unused as well, 
@@ -21,7 +22,7 @@ app.add_middleware(SessionMiddleware, secret_key="foot")
 signupc = SignUpClass()
 loginc = LoginClass()
 adminsettings = AdminSettingsClass()
-data = DataClass()
+data = SqliteClass()
 
 @app.get("/sidebar", response_class=HTMLResponse)
 def sidebar(request: Request):
@@ -64,10 +65,10 @@ def logout(request: Request):
     print('logged out')
     return RedirectResponse(url="/")
 
-@app.get("/tempname", response_class=HTMLResponse)
-def tempname(request: Request):
+@app.get("/messaging", response_class=HTMLResponse)
+def messaging(request: Request):
     username = request.session.get("username")
-    return templates.TemplateResponse(request=request, name='tempname.html', context={"username": username})
+    return templates.TemplateResponse(request=request, name='Messaging.html', context={"username": username})
 
 @app.post("/signup")
 def submitsignup(request: Request, username = Form(), password = Form()):
@@ -104,7 +105,7 @@ def submitlogin(request: Request, username = Form(), password = Form()):
     request.session['username'] = username
 
 
-    return RedirectResponse(url="/tempname", status_code=303)
+    return RedirectResponse(url="/", status_code=303)
 
 @app.post("/deleteuser")
 def deleteuser(request: Request):
@@ -151,6 +152,24 @@ def change_password(request: Request, password = Form(), confirm = Form()):
 def promote_demote(request: Request, id = Form()):
     pass
 
+@app.get('/api/check-login')
+def check_login(request: Request):
+    username = request.session.get('username')
+
+    if username:
+        id, admin, _ = data.load(username)
+        return JSONResponse({
+            "login": True,
+            "username": username,
+            "admin": bool(admin)
+        })
+    
+    return JSONResponse({'login': False})
+
+@app.get("/favicon.ico", include_in_schema=False)
+async def get_favicon():
+    return Response(content='', media_type='image/x-icon')
+
 # Scary!!!
 # Anybody could use the method if they wanted.
 # Maybe ask for a key hash or password?
@@ -170,5 +189,96 @@ def make_user_object(request: Request):
 
     return user
 
+
+# @app.middleware('http')
+# async def check_ip(request: Request, call_next):
+
+#     ALLOWED_IPS = {"100.115.92.197", "10.104.166.149", "10.104.166.167"}
+
+#     client_ip = request.client.host
+
+#     if client_ip not in ALLOWED_IPS:
+#         return JSONResponse({"error": "Access Denied"}, status_code=403)
+
+#     response = await call_next(request)
+
+#     return response
+
+
+
+
+
+
 if __name__=='__main__':
-    uvicorn.run("WebApp:app", host="localhost", port=8000, reload=True)
+    try:
+        parser = argparse.ArgumentParser(description="web app")
+
+        valid_true_args = ["T", 't', 'True', 'true']
+        valid_false_args = ['F', 'f', 'False', 'false']
+
+        parser.add_argument(
+            '--host',
+            type=str,
+            help="Chose a valid host",
+            default='localhost'
+        )
+
+        parser.add_argument(
+            '--port',
+            help="chose an available port",
+            type=int,
+            default=8000
+        )
+
+        parser.add_argument(
+            "--reload",
+            type=str
+        )
+
+        parser.add_argument(
+            "--workers",
+            type=int,
+            help="number of threads uvicorn can use"
+        )
+
+
+        args = parser.parse_args()
+
+        host = args.host
+        port = args.port
+        reload = args.reload
+
+        if reload in valid_true_args:
+            reload = True
+
+        elif reload in valid_false_args:
+            reload = False
+
+        else:
+            reload = False
+
+
+
+        """
+            If you want to connect multiple devices
+            Set host to 0.0.0.0
+            set port to 8080
+            Make sure you have port forwarding for 8080
+            Have someone type your ip shown in network settings + : + port
+            ie.: http://10.0.0.1:8080
+            both devices must be on the same wifi
+        """
+
+        uvicorn.run(
+            "WebApp:app",
+            host=host,
+            port=port,
+            reload=reload,
+            workers=4,
+            limit_concurrency=100,
+            timeout_keep_alive=5
+        )
+
+    except Exception as e:
+        print(e)
+

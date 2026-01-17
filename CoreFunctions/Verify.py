@@ -1,9 +1,9 @@
 import bcrypt
-from .Data import DataClass
+from .DataManager import SqliteClass
 
 class VerifyClass:
     def __init__(self):
-        self.data = DataClass()
+        self.data = SqliteClass()
 
     def verify_sign_up(self, username, password):
         passed = True

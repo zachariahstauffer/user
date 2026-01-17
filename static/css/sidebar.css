@@ -12,6 +12,11 @@
     padding: 1em;
 }
 
+#sidebar li{
+    padding: 0.5em;
+}
+
+
 #sidebar > ul > li:first-child{
     display: flex;
     justify-content: flex-end;
@@ -71,6 +76,7 @@
 
 #dropdown-btn-container{
     padding-top: 0.5em;
+    padding-bottom: 1em;
 }
 
 #sidebar-dropdown-hide.collapsed {

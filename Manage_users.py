@@ -17,7 +17,7 @@ from typing import Sequence
 
 import bcrypt
 
-from CoreFunctions.Data import DataClass
+from CoreFunctions.DataManager import SqliteClass
 
 
 DB_PATH = "data.db"
@@ -54,12 +54,12 @@ def wipe_non_admins(confirm: bool = False, db_path: str = DB_PATH) -> None:
             print("Aborted.")
             return
 
-    DataClass().wipe()
+    SqliteClass().wipe()
     print("Wiped non-admin users.")
 
 
 def create_admin(username: str | None = None, password: str | None = None, db_path: str = DB_PATH) -> None:
-    dc = DataClass()  # ensures table exists
+    dc = SqliteClass()  # ensures table exists
 
     if username is None:
         username = input("Admin username: ")
@@ -106,7 +106,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     ca_p.add_argument("--password", help="Admin password (unsafe on CLI)")
 
     # ensure DB and tables exist
-    DataClass()
+    SqliteClass()
 
     args = p.parse_args(argv)
 

@@ -1,10 +1,10 @@
-from .Data import DataClass
+from .DataManager import SqliteClass
 from .Verify import VerifyClass
 import bcrypt
 
 class SignUpClass:
     def __init__(self):
-        self.data = DataClass()
+        self.data = SqliteClass()
         self.verify = VerifyClass()
 
     def sign_up(self, username, password):

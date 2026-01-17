@@ -1,8 +1,8 @@
-from .Data import DataClass
+from .DataManager import SqliteClass
 
 class AdminSettingsClass:
     def __init__(self):
-        self.data = DataClass()
+        self.data = SqliteClass()
 
     def promote_user_demote_admin(self, username):
         id, admin, _ = self.data.load(username)

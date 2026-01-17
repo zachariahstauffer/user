@@ -6,21 +6,24 @@
 <!-- Make the feed scrollable -->
 <html>
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <link rel="stylesheet" href="/static/css/style.css">
 	    <link rel="stylesheet" href="/static/css/home.css">
+        
 	    <script src="/static/js/style.js"></script>
 
         <title>Home Page</title>
     </head>
     <body>
         <nav id="sidebar"></nav>
-        <main>
 
         <main>
             <section class="composer-container">
                 <textarea 
                     id="composer" 
-                    placeholder="What’s happening?" 
+                    placeholder="What's happening?" 
                     maxlength="280"
                     cols="80"
                     rows="4"
@@ -38,17 +41,20 @@
                         <span class="username">@alice</span>
                         <span class="timestamp">· 2m</span>
                     </header>
+
                     <p>
                         This is a placeholder post. Chronological. No algorithm.
                     </p>
+
                     <div class="post-actions">
-                        <button>Reply</button>
-                        <button>Repost</button>
-                        <button>Like</button>
+                        <button id="reply">Reply</button>
+                        <button id="repost">Repost</button>
+                        <button id="like">Like</button>
                     </div>
                 </article>
             </section>
         </main>
+
         <footer>
             Footer
         </footer>     

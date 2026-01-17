@@ -1,7 +1,6 @@
 from .Verify import VerifyClass
-from .Data import DataClass
+from .DataManager import SqliteClass
 from .SignUp import SignUpClass
-import bcrypt
 
 class UserClass:
     def __init__(self, id, username: str, admin_status: bool):
@@ -24,10 +23,10 @@ class UserClass:
         if val:
             list.append("password is strong")
             new_password = SignUpClass().text_to_hash(new_password)
-            DataClass().change_password(self.id, new_password)
+            SqliteClass().change_password(self.id, new_password)
 
         return val, list
 
     def delete_account(self):
-        DataClass().delete_user(self.id)
+        SqliteClass().delete_user(self.id)
 
