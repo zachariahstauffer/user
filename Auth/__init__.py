@@ -1,4 +1,4 @@
-# CoreFunctions/__init__.py
+# Auth/__init__.py
 
 from .AdminSettings import AdminSettingsClass
 from .DataManager import SqliteClass

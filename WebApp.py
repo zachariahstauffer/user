@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Form, Request
+from fastapi import FastAPI, Form, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse, Response
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
@@ -7,16 +7,13 @@ from starlette.middleware.sessions import SessionMiddleware
 import uvicorn
 import argparse
 
-from CoreFunctions import SignUpClass, LoginClass, UserClass, AdminSettingsClass, SqliteClass
-
-# I left a couple of notes here for you
-# I noticed that you left AdminSettings.html unused as well, 
-# but I would recommend having a specific key to access it, 
-# as well as the admin functions.
+from Auth import SignUpClass, LoginClass, UserClass, AdminSettingsClass, SqliteClass
 
 app = FastAPI()
 templates = Jinja2Templates(directory="Templates")
+
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
 app.add_middleware(SessionMiddleware, secret_key="foot")
 
 signupc = SignUpClass()
@@ -24,10 +21,14 @@ loginc = LoginClass()
 adminsettings = AdminSettingsClass()
 data = SqliteClass()
 
+
+#all @app.get function below here
+
 @app.get("/sidebar", response_class=HTMLResponse)
 def sidebar(request: Request):
     print("sidebar")
     return templates.TemplateResponse(request=request, name="Sidebar.html")
+
 
 @app.get("/", response_class=HTMLResponse)
 def homepage(request: Request):
@@ -69,6 +70,9 @@ def logout(request: Request):
 def messaging(request: Request):
     username = request.session.get("username")
     return templates.TemplateResponse(request=request, name='Messaging.html', context={"username": username})
+
+
+#all @app.post functions down here
 
 @app.post("/signup")
 def submitsignup(request: Request, username = Form(), password = Form()):
@@ -152,6 +156,11 @@ def change_password(request: Request, password = Form(), confirm = Form()):
 def promote_demote(request: Request, id = Form()):
     pass
 
+
+
+#app js get/post requests below here
+
+
 @app.get('/api/check-login')
 def check_login(request: Request):
     username = request.session.get('username')
@@ -170,13 +179,21 @@ def check_login(request: Request):
 async def get_favicon():
     return Response(content='', media_type='image/x-icon')
 
-# Scary!!!
-# Anybody could use the method if they wanted.
-# Maybe ask for a key hash or password?
-# curl -X POST <url|(ip:port)>/wipe would be all it takes
-@app.post("/wipe")
-def wipe(request: Request):
-    data.wipe()
+
+
+#all websockets below here
+
+@app.websocket('/ws')
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+
+    while True:
+        text = await websocket.receive_text()
+
+        await websocket.send_text(text)
+
+
+#non @app function below here
 
 def make_user_object(request: Request):
     username = request.session.get("username")
@@ -188,23 +205,6 @@ def make_user_object(request: Request):
     user = UserClass(id, username, admin)
 
     return user
-
-
-# @app.middleware('http')
-# async def check_ip(request: Request, call_next):
-
-#     ALLOWED_IPS = {"100.115.92.197", "10.104.166.149", "10.104.166.167"}
-
-#     client_ip = request.client.host
-
-#     if client_ip not in ALLOWED_IPS:
-#         return JSONResponse({"error": "Access Denied"}, status_code=403)
-
-#     response = await call_next(request)
-
-#     return response
-
-
 
 
 

@@ -21,6 +21,22 @@ async function update_message_field() {
     })
 }
 
+async function websocket_handler() {
+    let ws = new WebSocket();
+
+    ws.onmessage = function(event){}
+}
+
+
+
+
+
+
+
+
+
+
+
 
 function create_message_element(message, classes) {
     let parent_element = document.getElementById('messages-container');
@@ -43,4 +59,7 @@ function create_message_element(message, classes) {
 // add new deamon functions here
 document.addEventListener("DOMContentLoaded",  (_) => {
     update_message_field();
+    websocket_handler();
 })
+
+
