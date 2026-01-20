@@ -1,0 +1,73 @@
+.overseer{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: clamp(0.5rem, 2vw, 1rem);
+}
+
+.messages-container{
+    display: flex;
+    flex-direction: column-reverse;
+
+    gap: clamp(0.5rem, 2vw, 1rem);
+    padding-bottom: 1rem;
+    border: 1px var(--line-clr) solid; 
+
+    min-height: 50vh;
+    min-height: 50dvh;
+
+    max-height: 50vh;
+    max-height: 50dvh;
+
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
+.user{
+    background-color: var(--secondary-base-clr);
+    color: var(--text-clr);
+    border: 1px var(--line-clr) solid;
+    padding: 0.5em;
+    margin: 0.01rem;
+}
+
+.messaging-container{
+    display: flex;
+    flex-direction: row;
+    gap: 0.3rem;
+    margin-top: auto;
+}
+
+.fa{
+    color: var(--text-clr);
+    background-color: var(--secondary-base-clr);
+}
+
+#send{
+    box-sizing: border-box;
+    border: 0.02rem var(--line-clr) solid;
+    min-width: 2rem;
+    max-width: 4rem;
+
+    svg{
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.composer-actions{
+    max-width: 25px;
+    min-width: 2rem;
+    max-width: 4rem;
+}
+
+#composer{
+    color: var(--secondary-txt-clr);
+    background-color: var(--secondary-base-clrbase-clr);
+    flex: 1;
+    min-height: 4rem;
+    padding: 0.5rem;
+    resize: none;
+}
+
+

@@ -28,14 +28,26 @@ async function sidebar_functions() {
     let dropdown = document.getElementById('dropdown-btn-container');
     let dropdown_hide = document.getElementById('sidebar-dropdown-hide')
 
+    let up_arrow = document.getElementById('up_arrow')
+    let down_arrow = document.getElementById('down_arrow')
+
+    let collapsed = localStorage.getItem('collapsed_sidebar') === 'true'
+
+    if(collapsed){
+        sidebar.classList.toggle("collapsed")
+    }
 
 
     sidebar_toggle.addEventListener('click', (_) => {
         sidebar.classList.toggle('collapsed');
+        localStorage.setItem('collapsed_sidebar', collapsed ? 'true' : 'false')
     });
 
     dropdown.addEventListener('click', (_) => {
         dropdown_hide.classList.toggle('collapsed');
+
+        up_arrow.classList.toggle('hidden')
+        down_arrow.classList.toggle('hidden')
     });
 }
 
@@ -45,27 +57,18 @@ async function check_login_status(){
     let response = await fetch('/api/check-login')
     let data = await response.json()
 
-    let sidebar_signup = document.getElementById('sidebar_signup')
-    let sidebar_login = document.getElementById('sidebar_login')
+    let pre_login = document.getElementById('pre-login')
+    let post_login = document.getElementById('post-login')
 
-
-    let sidebar_profile = document.getElementById('sidebar_profile')
-    let sidebar_logout = document.getElementById('sidebar_logout')
 
     if (data.login){
-        sidebar_signup.classList.add('hidden')
-        sidebar_login.classList.add('hidden')
+        pre_login.classList.add('hidden')
 
-
-        sidebar_profile.classList.remove('hidden')
-        sidebar_logout.classList.remove('hidden')
+        post_login.classList.remove('hidden')
     } else {
-        sidebar_signup.classList.remove('hidden')
-        sidebar_login.classList.remove('hidden')
+        pre_login.classList.remove('hidden')
 
-
-        sidebar_profile.classList.add('hidden')
-        sidebar_logout.classList.add('hidden')
+        post_login.classList.add('hidden')
 
 
     }
