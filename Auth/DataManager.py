@@ -1,13 +1,20 @@
 import sqlite3
 from pymongo import MongoClient
+import os
 import datetime
 
 class SqliteClass:
     def __init__(self):
+        self.directory = 'data_folder'
+        self.make_dir()
         self.create_table()
 
+    def make_dir(self):
+        if not os.path.exists(self.directory):
+            os.makedirs(self.directory)
+
     def create_table(self):
-        with sqlite3.connect('data.db') as con:
+        with sqlite3.connect(f'{self.directory}/data.db') as con:
             cur = con.cursor()
             cur.execute('PRAGMA journal_mode = WAL')
             cur.execute('PRAGMA synchronous = NORMAL')
@@ -24,7 +31,7 @@ class SqliteClass:
 
     def save(self, username, hashed_password):
 
-        with sqlite3.connect('data.db') as file:
+        with sqlite3.connect(f'{self.directory}/data.db') as file:
             cur = file.cursor()
 
             cur.execute("""
@@ -34,7 +41,7 @@ class SqliteClass:
             file.commit()
             
     def load(self, user):
-        with sqlite3.connect('data.db') as con:
+        with sqlite3.connect(f'{self.directory}/data.db') as con:
             cur = con.cursor()
 
             cur.execute("SELECT id, admin, password_hash FROM users WHERE username = ?", (user,))
@@ -48,7 +55,7 @@ class SqliteClass:
         return id, admin, val
 
     def check_for_existing_user(self, username):
-        with sqlite3.connect('data.db') as con:
+        with sqlite3.connect(f'{self.directory}/data.db') as con:
             cur = con.cursor()
 
             cur.execute("SELECT EXISTS(SELECT 1 FROM users WHERE username = ?)", (username,))
@@ -61,7 +68,7 @@ class SqliteClass:
         return False
 
     def load_all_users(self):
-        with sqlite3.connect('data.db') as con:
+        with sqlite3.connect(f'{self.directory}/data.db') as con:
             cur = con.cursor()
 
             cur.execute("SELECT * FROM users")
@@ -71,13 +78,13 @@ class SqliteClass:
         return rows
 
     def delete_user(self, id):
-        with sqlite3.connect('data.db') as con:
+        with sqlite3.connect(f'{self.directory}/data.db') as con:
             cur = con.cursor()
             cur.execute("DELETE FROM users WHERE id = ?", (id,))
             con.commit()
         
     def change_password(self, id, new_hash):
-        with sqlite3.connect('data.db') as con:
+        with sqlite3.connect(f'{self.directory}/data.db') as con:
             cur = con.cursor()
 
             cur.execute("""
@@ -89,7 +96,7 @@ class SqliteClass:
 
     def change_admin_status(self, id, status):
 
-        with sqlite3.connect('data.db') as con:
+        with sqlite3.connect(f'{self.directory}/data.db') as con:
             cur = con.cursor()
 
             cur.execute("""
@@ -101,7 +108,7 @@ class SqliteClass:
             con.commit()
 
     def wipe(self):
-        with sqlite3.connect('data.db') as con:
+        with sqlite3.connect(f'{self.directory}/data.db') as con:
             cur = con.cursor()
             cur.execute("DELETE FROM users WHERE admin <> ?", (True,))
             con.commit()
@@ -136,3 +143,7 @@ class MongoDBClass:
                 {"recipient_id": user_id}
             ]
         }).sort("timestamp", -1).limit(limit))
+
+
+if __name__ == '__main__':
+    SqliteClass()
