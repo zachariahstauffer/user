@@ -23,12 +23,20 @@
     scroll-behavior: smooth;
 }
 
-.user{
+.message{
     background-color: var(--secondary-base-clr);
     color: var(--text-clr);
     border: 1px var(--line-clr) solid;
     padding: 0.5em;
     margin: 0.01rem;
+}
+
+.message.sent{
+    color: purple;
+}
+
+.message.recieved{
+    color: blue;
 }
 
 .messaging-container{
@@ -69,5 +77,3 @@
     padding: 0.5rem;
     resize: none;
 }
-
-

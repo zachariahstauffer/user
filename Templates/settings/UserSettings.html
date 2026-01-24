@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/css/style.css">
+        <title>User Settings</title>
+    </head>
+
+    <body>
+
+        <nav id="sidebar"></nav>
+
+
+        <main id="main">
+
+            <h1>Welcome {{user}}</h1>
+
+
+            <div class="usersettings">
+
+                <div class="logout">
+                    <form action="/logout" method="get">
+                        <button btn btn-logout>Logout</button><br><br>
+                    </form>
+                </div>
+
+                <div class="delete_account">
+                    <form action="/deleteuser" method="post">
+                        <button type="submit" class="btn btn-submit">delete_Account</button>
+                    </form>
+                </div>
+
+            </div>
+
+        </main>
+
+
+        <footer id="footer"><h1>footer</h1></footer>
+    </body>
+
+    <script src="/static/js/sidebar.js"></script>
+</html>

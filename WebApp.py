@@ -8,9 +8,11 @@ import uvicorn
 import argparse
 
 from Auth import SignUpClass, LoginClass, UserClass, AdminSettingsClass, SqliteClass
+from Messaging import chat_socket
+
 
 app = FastAPI()
-templates = Jinja2Templates(directory="Templates")
+templates = Jinja2Templates(directory=["Templates", 'Templates/auth', 'Templates/settings'])
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
@@ -21,6 +23,8 @@ loginc = LoginClass()
 adminsettings = AdminSettingsClass()
 data = SqliteClass()
 
+active_users = {}
+
 
 #all @app.get function below here
 
@@ -28,7 +32,6 @@ data = SqliteClass()
 def sidebar(request: Request):
     print("sidebar")
     return templates.TemplateResponse(request=request, name="Sidebar.html")
-
 
 @app.get("/", response_class=HTMLResponse)
 def homepage(request: Request):
@@ -55,10 +58,8 @@ def login(request: Request):
 def usersettings(request: Request):
     print('user settings page')
     username = request.session.get("username")
-    messages = request.session.get("messages")
-    succeed = request.session.get("succeed")
-    request.session.clear()
-    return templates.TemplateResponse(request=request, name="UserSettings.html", context={"user": username, "messages": messages, "succeed": succeed})
+
+    return templates.TemplateResponse(request=request, name="UserSettings.html")
 
 @app.get("/logout")
 def logout(request: Request):
@@ -157,9 +158,12 @@ def promote_demote(request: Request, id = Form()):
     pass
 
 
+@app.websocket('ws/{user_id}')
+async def websocket_endpoint(websocket: WebSocket, user_id: int):
+    await chat_socket(websocket, user_id)
+
 
 #app js get/post requests below here
-
 
 @app.get('/api/check-login')
 def check_login(request: Request):
@@ -175,22 +179,6 @@ def check_login(request: Request):
     
     return JSONResponse({'login': False})
 
-@app.get("/favicon.ico", include_in_schema=False)
-async def get_favicon():
-    return Response(content='', media_type='image/x-icon')
-
-
-
-#all websockets below here
-
-@app.websocket('/ws')
-async def websocket_endpoint(websocket: WebSocket):
-    await websocket.accept()
-
-    while True:
-        text = await websocket.receive_text()
-
-        await websocket.send_text(text)
 
 
 #non @app function below here
@@ -281,4 +269,3 @@ if __name__=='__main__':
 
     except Exception as e:
         print(e)
-

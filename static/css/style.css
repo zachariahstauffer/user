@@ -13,7 +13,7 @@ body{
     background-color: var(--base-clr);
     color: var(--text-clr);
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: auto 1fr;
     grid-template-rows: auto 1fr auto;
     grid-template-areas: 
     "sidebar main"

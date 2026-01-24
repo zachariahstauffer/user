@@ -19,7 +19,6 @@ async function set_sidebar() {
 }
 
 async function sidebar_functions() {
-    await set_sidebar();
 
     // Functionality goes here
     let sidebar_toggle = document.getElementById('toggle-sidebar-container');
@@ -60,17 +59,28 @@ async function check_login_status(){
     let pre_login = document.getElementById('pre-login')
     let post_login = document.getElementById('post-login')
 
+    let message_button = document.getElementById("message_button")
+
+    let logo = document.getElementById('logo');
+
+
 
     if (data.login){
         pre_login.classList.add('hidden')
 
         post_login.classList.remove('hidden')
+
+        message_button.classList.remove('hidden')
+
+        logo.innerHTML = data.username
     } else {
         pre_login.classList.remove('hidden')
 
         post_login.classList.add('hidden')
 
+        message_button.classList.add('hidden')
 
+        logo.innerHTML = 'user'
     }
 
     } catch (err) {
@@ -79,8 +89,8 @@ async function check_login_status(){
 }
 
 
-document.addEventListener('DOMContentLoaded', (_) => {
+document.addEventListener('DOMContentLoaded', async (_) => {
+    await set_sidebar();
     sidebar_functions();
     check_login_status();   
 })
-
