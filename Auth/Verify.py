@@ -6,12 +6,12 @@ class VerifyClass:
         self.data = SqliteClass()
 
     def verify_sign_up(self, username, password):
-        passed = True
-        passed_username = True
-        passed_password = True
-        username_messages = []
-        password_messages = []
-        messages = []
+        passed: bool = True
+        passed_username: bool = True
+        passed_password: bool = True
+        username_messages: list = []
+        password_messages: list = []
+        messages: list = []
 
         username_messages, passed_username  = self.verify_username(username)
         password_messages, passed_password = self.verify_password(password)
@@ -66,8 +66,8 @@ class VerifyClass:
 
     def verify_password(self, password):
 
-        passed = True
-        messages = []
+        passed:  bool = True
+        messages: list = []
 
         has_upper = has_lower = has_special = has_number = has_space = False
 

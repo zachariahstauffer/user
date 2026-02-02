@@ -22,22 +22,22 @@ class SqliteClass:
 
             cur.execute("""
                 CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY,
+                id TEXT PRIMARY KEY,
                 admin BOOLEAN,
                 username TEXT UNIQUE,
                 password_hash BLOB)
                 """)
             con.commit()
 
-    def save(self, username, hashed_password):
+    def save(self, id,  username, hashed_password):
 
         with sqlite3.connect(f'{self.directory}/data.db') as file:
             cur = file.cursor()
 
             cur.execute("""
-                INSERT INTO users (admin, username, password_hash)
-                VALUES (?, ?, ?)
-                """, (False, username, hashed_password))
+                INSERT INTO users (id, admin, username, password_hash)
+                VALUES (?, ?, ?, ?)
+                """, (id, False, username, hashed_password))
             file.commit()
             
     def load(self, user):
@@ -113,8 +113,6 @@ class SqliteClass:
             cur.execute("DELETE FROM users WHERE admin <> ?", (True,))
             con.commit()
 
-
-
 class MongoDBClass:
     def __init__(self, connection="monbodb://localhost:"):
         self.client = MongoClient(connection)
@@ -143,7 +141,6 @@ class MongoDBClass:
                 {"recipient_id": user_id}
             ]
         }).sort("timestamp", -1).limit(limit))
-
 
 if __name__ == '__main__':
     SqliteClass()

@@ -1,6 +1,7 @@
 from .DataManager import SqliteClass
 from .Verify import VerifyClass
 import bcrypt
+from uuid import uuid4
 
 class SignUpClass:
     def __init__(self):
@@ -17,8 +18,10 @@ class SignUpClass:
             return messages, passed
         
         hashed_password = self.password_to_hash(password)
+        
+        id = uuid4()
 
-        self.data.save(username, hashed_password)
+        self.data.save(id, username, hashed_password)
 
         if len(messages) == 0:
             messages.append(f"{username} has signed up")

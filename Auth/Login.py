@@ -8,7 +8,7 @@ class LoginClass:
         self.data = SqliteClass()
 
     def login(self, username, password):
-        message = []
+        message: list = []
         user = None
         id, status, hashed_password = self.data.load(username)
 
@@ -17,10 +17,9 @@ class LoginClass:
         if not exists:
             return message, correct_password, user
         
-
         if status:
             is_admin = True
-        elif not status:
+        else:
             is_admin = False
         
         if correct_password:

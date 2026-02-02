@@ -8,7 +8,6 @@ import uvicorn
 import argparse
 
 from Auth import SignUpClass, LoginClass, UserClass, AdminSettingsClass, SqliteClass
-from Messaging import chat_socket
 
 
 app = FastAPI()
@@ -160,7 +159,8 @@ def promote_demote(request: Request, id = Form()):
 
 @app.websocket('ws/{user_id}')
 async def websocket_endpoint(websocket: WebSocket, user_id: int):
-    await chat_socket(websocket, user_id)
+    # await chat_socket(websocket, user_id)
+    pass
 
 
 #app js get/post requests below here

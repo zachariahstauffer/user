@@ -18,11 +18,11 @@ class UserClass:
         return self.admin_status
 
     def change_password(self, new_password):
-        val, list = VerifyClass().verify_password(new_password)
+        msg, val = VerifyClass().verify_password(new_password)
 
         if val:
-            list.append("password is strong")
-            new_password = SignUpClass().text_to_hash(new_password)
+            msg.append("password is strong")
+            new_password = SignUpClass().password_to_hash(new_password)
             SqliteClass().change_password(self.id, new_password)
 
         return val, list
