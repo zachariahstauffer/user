@@ -1,6 +1,6 @@
-from .Verify import VerifyClass
-from .DataManager import SqliteClass
-from .User import UserClass
+from ..Verifacation.Verify import VerifyClass
+from ..DataManager import SqliteClass
+from ..UserManagement.User import UserClass
 
 class LoginClass:
     def __init__(self):

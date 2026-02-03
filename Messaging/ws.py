@@ -11,13 +11,12 @@ async def socket_endpoint(websocket: WebSocket, UserId):
 
         while True:
             raw_data = await websocket.receive_text()
-            data = json.load(raw_data)
+            data = json.loads(raw_data)
 
             to_user = data['to']
             message = data['message']
 
             await cm.send_to_user(message, to_user)
-            
 
     except WebSocketDisconnect:
         cm.disconnect(UserId)

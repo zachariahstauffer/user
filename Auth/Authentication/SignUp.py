@@ -1,5 +1,5 @@
-from .DataManager import SqliteClass
-from .Verify import VerifyClass
+from ..DataManager import SqliteClass
+from ..Verifacation.Verify import VerifyClass
 import bcrypt
 from uuid import uuid4
 
