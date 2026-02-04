@@ -1,6 +1,6 @@
 
 
-class connection_mannager:
+class connection_manager:
     def __init__(self):
         self.active_users: dict = {}
 

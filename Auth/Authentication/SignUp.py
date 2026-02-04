@@ -1,4 +1,4 @@
-from ..DataManager import SqliteClass
+from ..UserManagement.DataManager import SqliteClass
 from ..Verifacation.Verify import VerifyClass
 import bcrypt
 from uuid import uuid4
@@ -19,7 +19,7 @@ class SignUpClass:
         
         hashed_password = self.password_to_hash(password)
         
-        id = uuid4()
+        id = str(uuid4())
 
         self.data.save(id, username, hashed_password)
 

@@ -17,7 +17,7 @@ from typing import Sequence
 
 import bcrypt
 
-from Auth.DataManager import SqliteClass
+from Auth.UserManagement.DataManager import SqliteClass
 
 
 DB_PATH = "data.db"

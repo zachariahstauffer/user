@@ -1,8 +1,8 @@
 from fastapi import WebSocket, WebSocketDisconnect
 import json
-from .Manager import connection_mannager
+from .Manager import connection_manager
 
-cm = connection_mannager()
+cm = connection_manager()
 
 async def socket_endpoint(websocket: WebSocket, UserId):
     await cm.connect(UserId, websocket)

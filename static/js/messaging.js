@@ -1,4 +1,8 @@
-let activeUserId = null;
+function check_recent_messages() {
+    console.log("foot")
+}
+
+
 
 function open_chat(userId){
     activeUserId = userId;

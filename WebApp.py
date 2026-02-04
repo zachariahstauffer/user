@@ -8,6 +8,7 @@ import uvicorn
 import argparse
 
 from Auth import SignUpClass, LoginClass, UserClass, AdminSettingsClass, SqliteClass
+from Messaging.ws import socket_endpoint
 
 
 app = FastAPI()
@@ -157,11 +158,15 @@ def promote_demote(request: Request, id = Form()):
     pass
 
 
-@app.websocket('ws/{user_id}')
-async def websocket_endpoint(websocket: WebSocket, user_id: int):
-    # await chat_socket(websocket, user_id)
-    pass
+@app.websocket('ws/{userID}')
+async def websocket_endpoint(websocket: WebSocket, userID: int):
+    try:
+        await socket_endpoint(websocket=websocket, UserId=userID)
 
+        
+
+    except Exception as e:
+        print(e)
 
 #app js get/post requests below here
 
@@ -220,7 +225,8 @@ if __name__=='__main__':
 
         parser.add_argument(
             "--reload",
-            type=str
+            type=str,
+            default="f"
         )
 
         parser.add_argument(

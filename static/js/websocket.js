@@ -1,13 +1,22 @@
-let host = window.location.hostname;
+function getWebSocketURL(userId) {
+    let protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
+    let hostname = window.location.hostname
+    let port = window.location.port || (window.location.protocol === 'https:' ? '443' : '80')
 
-let port = host === "localhost" ? '8000' : "8080"
+    let adjustedPort = port;
 
-console.log(`ws://${host}:${port}`)
+    if (host === 'localhost' && port === '80') {
+        adjustedPort = '8000'
+    } else if (host !== 'localhost' && port === '80') {
+        adjustedPort = '8080'
+    }
 
-let socket = new WebSocket(`ws://${host}:${port}`);
-
-socket.onmessage = (event) => {
-    data = JSON.parse(event.data)
-
+    return `${protocol}//${host}:${adjustedPort}/ws/${userID}`
 
 }
+
+
+const userID = fetch("/api/get_userID")
+const socket = new WebSocket(getWebSocketURL(userID))
+
+

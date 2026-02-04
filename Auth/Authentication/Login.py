@@ -1,5 +1,5 @@
 from ..Verifacation.Verify import VerifyClass
-from ..DataManager import SqliteClass
+from ..UserManagement.DataManager import SqliteClass
 from ..UserManagement.User import UserClass
 
 class LoginClass:

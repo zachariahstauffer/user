@@ -1,5 +1,5 @@
 from ..Verifacation.Verify import VerifyClass
-from ..DataManager import SqliteClass
+from .DataManager import SqliteClass
 from ..Authentication.SignUp import SignUpClass
 from ..Admin.UserSettings import change_password, delete_account
 
@@ -9,7 +9,7 @@ class UserClass:
         self.username = username
         self.admin_status = admin_status
 
-    def get_user_id(self):
+    def get_userID(self):
         return self.id
     
     def get_username(self):

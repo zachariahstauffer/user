@@ -114,33 +114,32 @@ class SqliteClass:
             con.commit()
 
 class MongoDBClass:
-    def __init__(self, connection="monbodb://localhost:"):
+    def __init__(self, connection="mongodb://localhost:27017"):
         self.client = MongoClient(connection)
-        self.db = self.client['zbear']
+        self.db = self.client['messages']
         self.posts = self.db['posts']
 
-    def store_post(self, author_id, content):
+    def store_message(self, sender_id, recipient_id,content):
             
 
         doc = {
-            "author_id": author_id,
+            "sender_id": sender_id,
             "content": content,
+            "recipient_id": recipient_id,
             "timestamp": datetime.datetime.now(),
         }
 
         return str(self.posts.insert_one(doc).inserted_id)
             
 
-    def get_post(self, message_id):
+    def get_messages(self, message_id):
         return self.posts.find_one({"_id": message_id})
 
-    def get_all_post(self, user_id, limit):
+    def get_all_post(self, userID, limit):
         return list(self.posts.find({
             "$or": [
-                {"author_id": user_id},
-                {"recipient_id": user_id}
+                {"author_id": userID},
+                {"recipient_id": userID}
             ]
         }).sort("timestamp", -1).limit(limit))
 
-if __name__ == '__main__':
-    SqliteClass()
