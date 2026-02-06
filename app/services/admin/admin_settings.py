@@ -1,4 +1,4 @@
-from ..UserManagement.DataManager import SqliteClass
+from App.Services.DataBase.DataManager import SqliteClass
 
 class AdminSettingsClass:
     def __init__(self):

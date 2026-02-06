@@ -1,6 +1,6 @@
-from ..Verifacation.Verify import VerifyClass
-from ..UserManagement.DataManager import SqliteClass
-from ..UserManagement.User import UserClass
+from App.Services.Authentication.Verify import VerifyClass
+from App.Services.DataBase.DataManager import SqliteClass
+from App.Services.UserManagement.User import UserClass
 
 class LoginClass:
     def __init__(self):

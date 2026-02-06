@@ -1,7 +1,7 @@
-from ..Verifacation.Verify import VerifyClass
-from .DataManager import SqliteClass
-from ..Authentication.SignUp import SignUpClass
-from ..Admin.UserSettings import change_password, delete_account
+from App.Services.Authentication.Verify import VerifyClass
+from App.Services.DataBase.DataManager import SqliteClass
+from App.Services.Authentication.SignUp import SignUpClass
+from App.Services.UserManagement.UserSettings import *
 
 class UserClass:
     def __init__(self, id, username: str, admin_status: bool):

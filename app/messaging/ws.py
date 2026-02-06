@@ -1,6 +1,7 @@
 from fastapi import WebSocket, WebSocketDisconnect
 import json
-from .Manager import connection_manager
+
+from App.Messaging.Manager import connection_manager
 
 cm = connection_manager()
 
@@ -17,6 +18,7 @@ async def socket_endpoint(websocket: WebSocket, UserId):
             message = data['message']
 
             await cm.send_to_user(message, to_user)
+            
 
     except WebSocketDisconnect:
         cm.disconnect(UserId)

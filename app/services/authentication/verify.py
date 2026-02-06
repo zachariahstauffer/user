@@ -1,5 +1,5 @@
 import bcrypt
-from ..UserManagement.DataManager import SqliteClass
+from App.Services.DataBase.DataManager import SqliteClass
 
 class VerifyClass:
     def __init__(self):

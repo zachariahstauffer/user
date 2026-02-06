@@ -5,6 +5,8 @@ class connection_manager:
         self.active_users: dict = {}
 
     async def connect(self, UserId, websocket):
+
+        await websocket.accept()
         
         self.active_users[UserId] = websocket
 
@@ -15,4 +17,4 @@ class connection_manager:
     async def send_to_user(self, message, UserId):
         if UserId in self.active_users:
             socket = self.active_users[UserId]
-            await socket.send(message)
+            await socket.send_json(message)
